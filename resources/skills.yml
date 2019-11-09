@@ -1,0 +1,13 @@
+# mcMMO skills
+acrobatics:
+  subskills:
+    dodge:
+      min-level: 2
+      max-level: 100
+      max-chance: 20.0
+      damage-amplification: 0.5
+      disallowed-causes: []
+    roll:
+      max-level: 100
+      max-chance: 100.0
+      damage-reduction: 7.0

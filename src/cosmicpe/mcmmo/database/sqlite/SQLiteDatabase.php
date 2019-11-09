@@ -7,7 +7,7 @@ namespace cosmicpe\mcmmo\database\sqlite;
 use Closure;
 use cosmicpe\mcmmo\database\IDatabase;
 use cosmicpe\mcmmo\McMMO;
-use cosmicpe\mcmmo\player\Player;
+use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\SkillInstance;
 use cosmicpe\mcmmo\skill\SkillManager;
 use pocketmine\utils\UUID;
@@ -34,7 +34,7 @@ class SQLiteDatabase implements IDatabase{
 	}
 
 	public function load(UUID $uuid, Closure $callback) : void{
-		$this->database->executeSelect(SQLiteStmt::LOAD_SKILLS, ["uuid" => $uuid->toString()], function(array $rows) use ($callback, $uuid) : void{
+		$this->database->executeSelect(SQLiteStmt::LOAD_SKILLS, ["uuid" => $uuid->toString()], static function(array $rows) use ($callback, $uuid) : void{
 			$skills = [];
 			foreach($rows as [
 				"skill" => $skill,
@@ -43,11 +43,11 @@ class SQLiteDatabase implements IDatabase{
 			]){
 				$skills[$skill] = new SkillInstance(SkillManager::get($skill), $cooldown, $experience);
 			}
-			$callback(new Player($uuid, $skills));
+			$callback(new McMMOPlayer($uuid, $skills));
 		});
 	}
 
-	public function save(Player $player) : void{
+	public function save(McMMOPlayer $player) : void{
 		$uuid = $player->getUniqueId()->toString();
 		$time = time();
 
@@ -59,7 +59,7 @@ class SQLiteDatabase implements IDatabase{
 		$entry = ["uuid" => $uuid, "skill" => &$skill_id, "cooldown" => &$skill_cooldown, "experience" => &$skill_experience];
 		foreach($player->getSkills() as $skill_id => $skill){
 			$skill_cooldown = $time + $skill->getCooldown();
-			$skill_experience = $skill->getExperience();
+			$skill_experience = $skill->getExperience()->getValue();
 			$this->database->executeInsert(SQLiteStmt::SAVE_SKILLS, $entry);
 		}
 	}

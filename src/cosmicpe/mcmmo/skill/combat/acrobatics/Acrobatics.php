@@ -12,7 +12,18 @@ use pocketmine\player\Player;
 
 class Acrobatics implements Skill, Listenable{
 
-	public function getFallXp(Player $player, float $damage) : int{
+	/** @var Dodge */
+	private $dodge;
+
+	/** @var Roll */
+	private $roll;
+
+	public function __construct(Dodge $dodge, Roll $roll){
+		$this->dodge = $dodge;
+		$this->roll = $roll;
+	}
+
+	public function getFallXp(Player $player, float $damage, bool $roll_processed) : int{
 		$feather_falling_amp = 1;
 		$feather_falling = Enchantment::FEATHER_FALLING();
 		foreach($player->getArmorInventory()->getContents() as $item){
@@ -21,7 +32,7 @@ class Acrobatics implements Skill, Listenable{
 				break;
 			}
 		}
-		return (int) floor(120 * $damage * $feather_falling_amp);
+		return (int) floor(($roll_processed ? 80 : 120) * $damage * $feather_falling_amp);
 	}
 
 	public function getIdentifier() : string{
@@ -33,6 +44,14 @@ class Acrobatics implements Skill, Listenable{
 	}
 
 	public function getListeners() : array{
-		return [AcrobaticsListener::class];
+		return [new AcrobaticsListener()];
+	}
+
+	public function getDodge() : Dodge{
+		return $this->dodge;
+	}
+
+	public function getRoll() : Roll{
+		return $this->roll;
 	}
 }

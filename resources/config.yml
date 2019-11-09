@@ -1,9 +1,20 @@
 # Config file for mcMMO v0.0.1
 
+experience:
+  type: exponential
+  # For type: linear
+  linear:
+    base: 1020
+    multiplier: 20
+  # For type: exponential
+  exponential:
+    base: 1000
+    multiplier: 1
+    exponent: 1.65
+
 database:
   # The database type. "sqlite" and "mysql" are supported.
   type: sqlite
-
   # Edit these settings only if you choose "sqlite".
   sqlite:
     # The file name of the database in the plugin data folder.
