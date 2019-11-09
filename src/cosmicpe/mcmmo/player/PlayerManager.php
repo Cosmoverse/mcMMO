@@ -6,7 +6,6 @@ namespace cosmicpe\mcmmo\player;
 
 use cosmicpe\mcmmo\database\IDatabase;
 use cosmicpe\mcmmo\McMMO;
-use cosmicpe\mcmmo\player\McMMOPlayer as McMMOPlayer;
 use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;

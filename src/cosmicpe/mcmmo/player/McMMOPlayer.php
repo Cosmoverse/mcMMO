@@ -66,7 +66,7 @@ final class McMMOPlayer{
 			$experience->setValue($ev->getNewExperience());
 			$old_level = $ev->getOldLevel();
 			$new_level = $ev->getNewLevel();
-			if($ev->getNewLevel() > $old_level){
+			if($new_level > $old_level){
 				$player = $this->getPlayer();
 				if($player !== null){
 					$player->sendMessage(TextFormat::YELLOW . $skill->getName() . " increased by " . ($new_level - $old_level) . ". Total (" . $new_level . ")");

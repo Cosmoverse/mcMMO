@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS players(
 CREATE TABLE IF NOT EXISTS skills(
     uuid CHAR(36) NOT NULL,
     skill VARCHAR(32) NOT NULL,
-    cooldown INT UNSIGNED NOT NULL,
     experience INT UNSIGNED NOT NULL,
+    cooldown INT UNSIGNED NOT NULL,
     PRIMARY KEY(uuid, skill),
     FOREIGN KEY(uuid)
         REFERENCES players(uuid)

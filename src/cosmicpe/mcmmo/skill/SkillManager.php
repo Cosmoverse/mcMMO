@@ -9,6 +9,7 @@ use cosmicpe\mcmmo\player\PlayerManager;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Acrobatics;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Dodge;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Roll;
+use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
 use pocketmine\plugin\Plugin;
 
 final class SkillManager{
@@ -21,6 +22,8 @@ final class SkillManager{
 
 	public static function init(McMMO $plugin) : void{
 		self::$player_manager = $plugin->getPlayerManager();
+		McMMOSkillListener::init($plugin);
+
 		self::registerDefaults($plugin);
 	}
 
@@ -41,7 +44,6 @@ final class SkillManager{
 		if($skill instanceof Listenable){
 			$plugin_manager = $plugin->getServer()->getPluginManager();
 			foreach($skill->getListeners() as $listener){
-				$listener->init(self::$player_manager);
 				$plugin_manager->registerEvents($listener, $plugin);
 			}
 		}

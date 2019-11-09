@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill;
 
+use pocketmine\event\Listener;
+
 interface Listenable{
 
 	/**
-	 * @return SkillListener[]
+	 * @return Listener[]
 	 */
 	public function getListeners() : array;
 }
