@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace cosmicpe\mcmmo\player;
 
 use cosmicpe\mcmmo\event\McMMOPlayerSkillExperienceChangeEvent;
-use cosmicpe\mcmmo\event\McMMOPlayerSkillLevelChangeEvent;
 use cosmicpe\mcmmo\skill\Skill;
 use cosmicpe\mcmmo\skill\SkillInstance;
 use cosmicpe\mcmmo\sound\McMMOLevelUpSound;
@@ -51,16 +50,26 @@ final class McMMOPlayer{
 	}
 
 	public function increaseSkillExperience(Skill $skill, int $value) : bool{
-		$experience = $this->getSkill($skill)->getExperience();
-		$ev = McMMOPlayerSkillExperienceChangeEvent::createInstance($this, $skill, $experience->getValue() + $value);
+		return $this->setSkillExperience($skill, $this->getSkill($skill)->getExperience()->getValue() + $value);
+	}
+
+	public function decreaseSkillExperience(Skill $skill, int $value) : bool{
+		return $this->setSkillExperience($skill, $this->getSkill($skill)->getExperience()->getValue() - $value);
+	}
+
+	public function setSkillExperience(Skill $skill, int $value) : bool{
+		$skill_instance = $this->getSkill($skill);
+		$experience = $skill_instance->getExperience();
+		$ev = new McMMOPlayerSkillExperienceChangeEvent($this, $skill, $skill_instance->getExperience()->getValue(), $value);
 		$ev->call();
 		if(!$ev->isCancelled()){
 			$experience->setValue($ev->getNewExperience());
-			if($ev instanceof McMMOPlayerSkillLevelChangeEvent){
+			$old_level = $ev->getOldLevel();
+			$new_level = $ev->getNewLevel();
+			if($ev->getNewLevel() > $old_level){
 				$player = $this->getPlayer();
 				if($player !== null){
-					$new_level = $ev->getNewLevel();
-					$player->sendMessage(TextFormat::YELLOW . $skill->getName() . " increased by " . ($new_level - $ev->getOldLevel()) . ". Total (" . $new_level . ")");
+					$player->sendMessage(TextFormat::YELLOW . $skill->getName() . " increased by " . ($new_level - $old_level) . ". Total (" . $new_level . ")");
 					$player->getWorld()->addSound($player->getEyePos(), new McMMOLevelUpSound(), [$player]);
 				}
 			}

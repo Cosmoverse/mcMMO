@@ -62,7 +62,6 @@ class AcrobaticsListener extends SkillListener{
 						$player->sendMessage($graceful ? TextFormat::GREEN . "**Graceful Landing**" : TextFormat::ITALIC . "**Rolled**");
 					}
 					$mcmmo_player->increaseSkillExperience($this->acrobatics, $this->acrobatics->getFallXp($player, $damage, $roll_processed));
-					$skill->getExperience()->addValue($this->acrobatics->getFallXp($player, $damage, $roll_processed));
 				}
 			}
 		}
