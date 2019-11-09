@@ -16,9 +16,8 @@ class McMMOPlayerSkillExperienceChangeEvent extends McMMOPlayerSkillEvent implem
 	public static function createInstance(McMMOPlayer $player, Skill $skill, int $new_value) : McMMOPlayerSkillExperienceChangeEvent{
 		$experience = $player->getSkill($skill)->getExperience();
 		$old_level = $experience->getLevel();
-		$new_level = SkillExperienceManager::get()->getLevelFromExperience($new_value);
-		return $new_level !== $old_level ?
-			new McMMOPlayerSkillLevelChangeEvent($player, $skill, $experience->getValue(), $new_value, $old_level, $new_level) :
+		return SkillExperienceManager::get()->getLevelFromExperience($new_value) !== $old_level ?
+			new McMMOPlayerSkillLevelChangeEvent($player, $skill, $experience->getValue(), $new_value, $old_level) :
 		new McMMOPlayerSkillExperienceChangeEvent($player, $skill, $experience->getValue(), $new_value);
 	}
 
