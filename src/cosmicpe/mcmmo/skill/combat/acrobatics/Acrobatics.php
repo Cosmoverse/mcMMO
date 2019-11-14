@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill\combat\acrobatics;
 
+use cosmicpe\mcmmo\skill\combat\CombatSkill;
 use cosmicpe\mcmmo\skill\combat\CombatSkillIds;
 use cosmicpe\mcmmo\skill\Listenable;
-use cosmicpe\mcmmo\skill\Skill;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\player\Player;
 
-class Acrobatics implements Skill, Listenable{
+class Acrobatics implements CombatSkill, Listenable{
 
 	/** @var Dodge */
 	private $dodge;
