@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill\listener;
 
+use cosmicpe\mcmmo\event\player\McMMOPlayerAbilityActivateEvent;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\ability\Ability;
 use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
@@ -29,15 +30,20 @@ final class McMMOSubSkillListener{
 						$sub_skill_instance = $mcmmo_player->getSubSkill($sub_skill);
 						$cooldown = $sub_skill_instance->getCooldown();
 						if($cooldown === 0){
-							$duration = $ability->handle($player, $mcmmo_player, $item);
-							if($duration !== null){
-								$player->sendMessage(TextFormat::GREEN . "* " . $sub_skill->getName() . " ACTIVATED *");
-								$handler->setCurrent($ability, $duration, static function() use ($player, $sub_skill) : void{
-									if($player->isOnline()){
-										$player->sendMessage(TextFormat::RED . "* " . $sub_skill->getName() . " DEACTIVATED *");
-									}
-								});
-								break;
+							$duration = $ability->getDuration($player, $mcmmo_player, $item);
+							if($duration > 0){
+								$ev = new McMMOPlayerAbilityActivateEvent($mcmmo_player, $ability, $duration);
+								$ev->call();
+								if(!$ev->isCancelled()){
+									$ability->handleAdd($player, $mcmmo_player, $item);
+									$player->sendMessage(TextFormat::GREEN . "* " . $sub_skill->getName() . " ACTIVATED *");
+									$handler->setCurrent($ability, $ev->getDuration(), static function() use ($player, $sub_skill) : void{
+										if($player->isOnline()){
+											$player->sendMessage(TextFormat::RED . "* " . $sub_skill->getName() . " DEACTIVATED *");
+										}
+									});
+									break;
+								}
 							}
 						}else{
 							$player->sendMessage(TextFormat::RED . "You cannot use " . $sub_skill->getName() . " for another " . $cooldown . "s!");

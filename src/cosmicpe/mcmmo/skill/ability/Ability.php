@@ -14,5 +14,7 @@ interface Ability{
 
 	public function getSubSkillIdentifier() : string;
 
-	public function handle(Player $player, McMMOPlayer $mcmmo_player, Item $item) : ?int;
+	public function getDuration(Player $player, McMMOPlayer $mcmmo_player, Item $item) : int;
+
+	public function handleAdd(Player $player, McMMOPlayer $mcmmo_player, Item $item) : void;
 }
