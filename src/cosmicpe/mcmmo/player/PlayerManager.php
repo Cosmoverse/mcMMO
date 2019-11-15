@@ -36,6 +36,8 @@ final class PlayerManager{
 			}
 		}, EventPriority::MONITOR, $plugin);
 		$this->database = $database;
+
+		PlayerAbilityHandler::init($plugin);
 	}
 
 	public function load(UUID $uuid) : void{

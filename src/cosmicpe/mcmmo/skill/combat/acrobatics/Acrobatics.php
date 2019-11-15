@@ -12,17 +12,6 @@ use pocketmine\player\Player;
 
 class Acrobatics implements CombatSkill, Listenable{
 
-	/** @var Dodge */
-	private $dodge;
-
-	/** @var Roll */
-	private $roll;
-
-	public function __construct(Dodge $dodge, Roll $roll){
-		$this->dodge = $dodge;
-		$this->roll = $roll;
-	}
-
 	public function getFallXp(Player $player, float $damage, bool $roll_processed) : int{
 		$feather_falling_amp = 1;
 		$feather_falling = Enchantment::FEATHER_FALLING();
@@ -45,13 +34,5 @@ class Acrobatics implements CombatSkill, Listenable{
 
 	public function getListeners() : array{
 		return [new AcrobaticsListener()];
-	}
-
-	public function getDodge() : Dodge{
-		return $this->dodge;
-	}
-
-	public function getRoll() : Roll{
-		return $this->roll;
 	}
 }

@@ -9,6 +9,8 @@ use cosmicpe\mcmmo\skill\listener\McMMOExperienceToller;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
 use cosmicpe\mcmmo\skill\SkillIds;
 use cosmicpe\mcmmo\skill\SkillManager;
+use cosmicpe\mcmmo\skill\subskill\SubSkillIds;
+use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\EventPriority;
 use pocketmine\event\Listener;
@@ -20,9 +22,9 @@ class AcrobaticsListener implements Listener{
 	public function __construct(){
 		/** @var Acrobatics $acrobatics */
 		$acrobatics = SkillManager::get(SkillIds::ACROBATICS);
+		$dodge = SubSkillManager::get(SubSkillIds::DODGE);
 
-		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics) : void{
-			$dodge = $acrobatics->getDodge();
+		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics, $dodge) : void{
 			if($dodge->isCauseAllowed($event->getCause())){
 				$damage = $event->getFinalDamage();
 				if($damage < $player->getHealth() && $dodge->process($mcmmo_player->getSkill($acrobatics)->getExperience()->getLevel())){
@@ -34,10 +36,10 @@ class AcrobaticsListener implements Listener{
 			}
 		});
 
-		McMMOSkillListener::registerEvent(EventPriority::HIGH, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics) : void{
+		$roll = SubSkillManager::get(SubSkillIds::ROLL);
+		McMMOSkillListener::registerEvent(EventPriority::HIGH, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics, $roll) : void{
 			if($event->getCause() === EntityDamageEvent::CAUSE_FALL){
 				$skill = $mcmmo_player->getSkill($acrobatics);
-				$roll = $acrobatics->getRoll();
 				$damage = $event->getFinalDamage();
 				$graceful = $player->isSneaking();
 				if($roll_processed = $roll->process($skill->getExperience()->getLevel(), $graceful ? 2.0 : 1.0)){

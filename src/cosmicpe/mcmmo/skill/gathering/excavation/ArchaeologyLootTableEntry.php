@@ -9,7 +9,7 @@ use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
 
-final class ExcavationLootTableEntry{
+final class ArchaeologyLootTableEntry{
 
 	/** @var Item */
 	private $item;

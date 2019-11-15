@@ -7,6 +7,8 @@ namespace cosmicpe\mcmmo\player;
 use cosmicpe\mcmmo\event\McMMOPlayerSkillExperienceChangeEvent;
 use cosmicpe\mcmmo\skill\Skill;
 use cosmicpe\mcmmo\skill\SkillInstance;
+use cosmicpe\mcmmo\skill\subskill\SubSkill;
+use cosmicpe\mcmmo\skill\subskill\SubSkillInstance;
 use cosmicpe\mcmmo\sound\McMMOLevelUpSound;
 use pocketmine\player\Player;
 use pocketmine\Server;
@@ -21,13 +23,22 @@ final class McMMOPlayer{
 	/** @var SkillInstance[] */
 	private $skills;
 
+	/** @var SubSkillInstance[] */
+	private $sub_skills;
+
+	/** @var PlayerAbilityHandler */
+	private $ability_handler;
+
 	/**
 	 * @param UUID $uuid
 	 * @param SkillInstance[] $skills
+	 * @param SubSkillInstance[] $sub_skills
 	 */
-	public function __construct(UUID $uuid, array $skills = []){
+	public function __construct(UUID $uuid, array $skills = [], array $sub_skills = []){
 		$this->uuid = $uuid;
 		$this->skills = $skills;
+		$this->sub_skills = $sub_skills;
+		$this->ability_handler = new PlayerAbilityHandler($this);
 	}
 
 	public function getUniqueId() : UUID{
@@ -47,6 +58,21 @@ final class McMMOPlayer{
 
 	public function getSkill(Skill $skill) : SkillInstance{
 		return $this->skills[$identifier = $skill->getIdentifier()] ?? $this->skills[$identifier] = new SkillInstance($skill);
+	}
+
+	/**
+	 * @return SubSkillInstance[]
+	 */
+	public function getSubSkills() : array{
+		return $this->sub_skills;
+	}
+
+	public function getSubSkill(SubSkill $skill) : SubSkillInstance{
+		return $this->sub_skills[$identifier = $skill->getIdentifier()] ?? $this->sub_skills[$identifier] = new SubSkillInstance($skill);
+	}
+
+	public function getAbilityHandler() : PlayerAbilityHandler{
+		return $this->ability_handler;
 	}
 
 	public function increaseSkillExperience(Skill $skill, int $value) : bool{

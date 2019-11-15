@@ -10,6 +10,8 @@ use cosmicpe\mcmmo\McMMO;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\SkillInstance;
 use cosmicpe\mcmmo\skill\SkillManager;
+use cosmicpe\mcmmo\skill\subskill\SubSkillInstance;
+use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\utils\UUID;
 use poggit\libasynql\DataConnector;
 use poggit\libasynql\libasynql;
@@ -34,7 +36,8 @@ class SQLiteDatabase implements IDatabase{
 	}
 
 	public function load(UUID $uuid, Closure $callback) : void{
-		$this->database->executeSelect(SQLiteStmt::LOAD_SKILLS, ["uuid" => $uuid->toString()], static function(array $rows) use ($callback, $uuid) : void{
+		$db = $this->database;
+		$db->executeSelect(SQLiteStmt::LOAD_SKILLS, ["uuid" => $uuid->toString()], static function(array $rows) use ($callback, $uuid, $db) : void{
 			$skills = [];
 			foreach($rows as [
 				"skill" => $skill,
@@ -43,7 +46,16 @@ class SQLiteDatabase implements IDatabase{
 			]){
 				$skills[$skill] = new SkillInstance(SkillManager::get($skill), $cooldown, $experience);
 			}
-			$callback(new McMMOPlayer($uuid, $skills));
+			$db->executeSelect(SQLiteStmt::LOAD_SUB_SKILLS, ["uuid" => $uuid->toString()], static function(array $rows) use($callback, $uuid, $skills) : void{
+				$sub_skills = [];
+				foreach($rows as [
+					"sub_skill" => $sub_skill,
+					"cooldown" => $cooldown
+				]){
+					$sub_skills[$sub_skill] = new SubSkillInstance(SubSkillManager::get($sub_skill), $cooldown);
+				}
+				$callback(new McMMOPlayer($uuid, $skills, $sub_skills));
+			});
 		});
 	}
 
@@ -61,6 +73,14 @@ class SQLiteDatabase implements IDatabase{
 			$skill_cooldown = $time + $skill->getCooldown();
 			$skill_experience = $skill->getExperience()->getValue();
 			$this->database->executeInsert(SQLiteStmt::SAVE_SKILLS, $entry);
+		}
+
+		$sub_skill_id = null;
+		$sub_skill_cooldown = null;
+		$entry = ["uuid" => $uuid, "sub_skill" => &$sub_skill_id, "cooldown" => &$sub_skill_cooldown];
+		foreach($player->getSubSkills() as $sub_skill_id => $sub_skill){
+			$sub_skill_cooldown = $time + $sub_skill->getCooldown();
+			$this->database->executeInsert(SQLiteStmt::SAVE_SUB_SKILLS, $entry);
 		}
 	}
 

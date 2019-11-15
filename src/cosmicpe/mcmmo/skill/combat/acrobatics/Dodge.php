@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill\combat\acrobatics;
 
-use cosmicpe\mcmmo\skill\subskill\ProbableSubSkill;
+use cosmicpe\mcmmo\skill\combat\CombatSubSkillIds;
+use cosmicpe\mcmmo\utils\NumberUtils;
 use Ds\Set;
 use InvalidArgumentException;
 use pocketmine\event\entity\EntityDamageEvent;
 use ReflectionClass;
 
-class Dodge extends ProbableSubSkill{
+class Dodge extends AcrobaticsSubSkill{
+
+	/** @var int */
+	protected $max_level;
+
+	/** @var float */
+	protected $max_chance;
 
 	/** @var int */
 	protected $min_level;
@@ -22,7 +29,8 @@ class Dodge extends ProbableSubSkill{
 	private $disallowed_causes;
 
 	public function __construct(int $min_level, int $max_level, float $max_chance, float $damage_amplifier, array $disallowed_causes){
-		parent::__construct($max_level, $max_chance);
+		$this->max_level = $max_level;
+		$this->max_chance = $max_chance;
 		$this->min_level = $min_level;
 		$this->damage_amplifier = $damage_amplifier;
 
@@ -38,6 +46,14 @@ class Dodge extends ProbableSubSkill{
 		$this->disallowed_causes = new Set($disallowed_causes);
 	}
 
+	public function getIdentifier() : string{
+		return CombatSubSkillIds::DODGE;
+	}
+
+	public function getName() : string{
+		return "Dodge";
+	}
+
 	public function getDamageAmplifier() : float{
 		return $this->damage_amplifier;
 	}
@@ -47,6 +63,6 @@ class Dodge extends ProbableSubSkill{
 	}
 
 	public function process(int $level, float $amplifier = 1.0) : bool{
-		return $level >= $this->min_level && parent::process($level, $amplifier);
+		return $level >= $this->min_level && NumberUtils::getRandomBool($amplifier * $this->max_chance * (min($level, $this->max_level) / $this->max_level));
 	}
 }

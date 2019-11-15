@@ -7,11 +7,11 @@ namespace cosmicpe\mcmmo\skill\gathering\excavation;
 use cosmicpe\mcmmo\utils\WeightedRandom;
 use Generator;
 
-final class ExcavationLootTable extends WeightedRandom{
+final class ArchaeologyLootTable extends WeightedRandom{
 
 	/**
 	 * @param int $count
-	 * @return ExcavationLootTableEntry[]|Generator
+	 * @return ArchaeologyLootTableEntry[]|Generator
 	 */
 	public function generate(int $count) : Generator{
 		foreach($this->generateIndexes($count) as $index){

@@ -9,6 +9,8 @@ use cosmicpe\mcmmo\skill\listener\McMMOExperienceToller;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
 use cosmicpe\mcmmo\skill\SkillIds;
 use cosmicpe\mcmmo\skill\SkillManager;
+use cosmicpe\mcmmo\skill\subskill\SubSkillIds;
+use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\EventPriority;
 use pocketmine\event\Listener;
@@ -19,11 +21,13 @@ class ExcavationListener implements Listener{
 	public function __construct(){
 		/** @var Excavation $excavation */
 		$excavation = SkillManager::get(SkillIds::EXCAVATION);
-		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(BlockBreakEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($excavation) : void{
+		$archaeology = SubSkillManager::get(SubSkillIds::ARCHAEOLOGY);
+		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(BlockBreakEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($excavation, $archaeology) : void{
 			$block = $event->getBlock();
 			$drops = $event->getDrops();
 			$xp = $excavation->getBlockExperience($block);
-			foreach($excavation->getTreasure($block, $mcmmo_player->getSkill($excavation)) as $treasure){
+			/** @var ArchaeologyLootTableEntry $treasure */
+			foreach($archaeology->getTreasures($block, $mcmmo_player->getSkill($excavation)) as $treasure){
 				$drops[] = $treasure->getItem();
 				$xp += $treasure->getExperience();
 			}

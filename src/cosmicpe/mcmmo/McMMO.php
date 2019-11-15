@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo;
 
+use cosmicpe\mcmmo\customitem\CustomItemFactory;
 use cosmicpe\mcmmo\database\IDatabase;
 use cosmicpe\mcmmo\database\sqlite\SQLiteDatabase;
 use cosmicpe\mcmmo\player\PlayerManager;
@@ -36,6 +37,7 @@ final class McMMO extends PluginBase{
 		$this->database = new SQLiteDatabase($this);
 		$this->player_manager = new PlayerManager($this, $this->database);
 
+		CustomItemFactory::init($this);
 		SkillManager::init($this);
 	}
 

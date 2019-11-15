@@ -7,10 +7,9 @@ namespace cosmicpe\mcmmo\skill;
 use cosmicpe\mcmmo\McMMO;
 use cosmicpe\mcmmo\player\PlayerManager;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Acrobatics;
-use cosmicpe\mcmmo\skill\combat\acrobatics\Dodge;
-use cosmicpe\mcmmo\skill\combat\acrobatics\Roll;
 use cosmicpe\mcmmo\skill\gathering\excavation\Excavation;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
+use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\plugin\Plugin;
 
 final class SkillManager{
@@ -30,20 +29,17 @@ final class SkillManager{
 
 	private static function registerDefaults(McMMO $plugin) : void{
 		$plugin->saveResource("skills.yml");
+
+		SubSkillManager::init($plugin);
 		$config = yaml_parse_file($plugin->getDataFolder() . "skills.yml");
 
-		["dodge" => $dodge, "roll" => $roll] = $config["acrobatics"]["subskills"];
-		self::register($plugin, new Acrobatics(
-			new Dodge($dodge["min-level"], $dodge["max-level"], $dodge["max-chance"], $dodge["damage-amplification"], $dodge["disallowed-causes"]),
-			new Roll($roll["max-level"], $roll["max-chance"], $roll["damage-reduction"])
-		));
+		self::register($plugin, new Acrobatics());
 
-		["experiences" => $experiences, "treasures" => $treasures] = $config["excavation"];
-		self::register($plugin, new Excavation($experiences, $treasures));
+		["experiences" => $experiences] = $config["excavation"];
+		self::register($plugin, new Excavation($experiences));
 	}
 
 	public static function register(Plugin $plugin, Skill $skill) : void{
-		/** @var SkillInstance|string $class */
 		self::$skills[$skill->getIdentifier()] = $skill;
 		if($skill instanceof Listenable){
 			$plugin_manager = $plugin->getServer()->getPluginManager();

@@ -4,16 +4,9 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill\subskill;
 
-abstract class SubSkill{
+use cosmicpe\mcmmo\skill\Identifiable;
 
-	/** @var int */
-	protected $max_level;
+interface SubSkill extends Identifiable{
 
-	public function __construct(int $max_level){
-		$this->max_level = $max_level;
-	}
-
-	public function getMaxLevel() : int{
-		return $this->max_level;
-	}
+	public function getParentIdentifier() : string;
 }
