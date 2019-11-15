@@ -33,15 +33,14 @@ abstract class WeightedRandom{
 	}
 
 	final public function setup(bool $fill_null = false) : void{
-
 		if($fill_null){
-			$this->add(null, 1 - array_sum($this->probabilities));
+			$this->add(null, 1.0 - (array_sum($this->probabilities) / $this->count()));
 		}
 
 		// Store the underlying generator.
 		$this->random = new Random();
 
-		$probabilities_c = count($this->probabilities);
+		$probabilities_c = $this->count();
 
 		// Compute the average probability and cache it for later use.
 		$average = 1.0 / $probabilities_c;

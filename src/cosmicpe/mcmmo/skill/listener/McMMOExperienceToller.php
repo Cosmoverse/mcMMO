@@ -26,7 +26,6 @@ final class McMMOExperienceToller{
 				if($player->increaseSkillExperience(SkillManager::get($skill), $experience) && $callback !== null){
 					$callback();
 				}
-				var_dump($player->getSkill(SkillManager::get($skill)));
 			}
 		}
 	}
