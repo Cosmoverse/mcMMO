@@ -1,4 +1,6 @@
 # mcMMO skills
+
+## COMBAT SKILLS
 acrobatics:
   subskills:
     dodge:
@@ -11,3 +13,169 @@ acrobatics:
       max-level: 100
       max-chance: 100.0
       damage-reduction: 7.0
+
+## GATHERING SKILLS
+excavation:
+  # Excavation skill experience gained per block mined
+  experiences:
+    CLAY: 40
+    DIRT: 40
+    DIRT:1: 40
+    PODZOL: 40
+    GRASS: 40
+    GRAVEL: 40
+    MYCELIUM: 40
+    SAND: 40
+    SAND:1: 40
+    SNOW: 20
+    SNOW_BLOCK: 40
+    SOUL_SAND: 40
+  treasures:
+    CAKE:
+      amount: 1
+      # Excavation skill experience gained when this item drops
+      xp: 3000
+      drop:
+        chance: 0.0005
+        level: 750
+        from: [Dirt, Podzol, Grass, Sand, Sand:1, Gravel, Clay, Mycelium, Soul_Sand]
+    GUNPOWDER:
+      amount: 1
+      xp: 30
+      drop:
+        chance: 0.1
+        level: 75
+        from: [Gravel]
+    BONE:
+      amount: 1
+      xp: 30
+      drop:
+        chance: 0.1
+        level: 175
+        from: [Gravel]
+    APPLE:
+      amount: 1
+      xp: 100
+      drop:
+        chance: 0.001
+        level: 250
+        from: [Grass, Mycelium]
+    SLIME_BALL:
+      amount: 1
+      xp: 100
+      drop:
+        chance: 0.05
+        level: 150
+        from: [Clay]
+    BUCKET:
+      amount: 1
+      xp: 100
+      drop:
+        chance: 0.001
+        level: 500
+        from: [Clay]
+    NETHERRACK:
+      amount: 1
+      xp: 30
+      drop:
+        chance: 0.005
+        level: 850
+        from: [Gravel]
+    RED_MUSHROOM:
+      amount: 1
+      xp: 80
+      drop:
+        chance: 0.005
+        level: 500
+        from: [Dirt, Podzol, Grass, Mycelium]
+    BROWN_MUSHROOM:
+      amount: 1
+      xp: 80
+      drop:
+        chance: 0.005
+        level: 500
+        from: [Dirt, Podzol, Grass, Mycelium]
+    EGG:
+      amount: 1
+      xp: 100
+      drop:
+        chance: 0.01
+        level: 250
+        from: [Grass]
+    SOUL_SAND:
+      amount: 1
+      xp: 80
+      drop:
+        chance: 0.005
+        level: 650
+        from: [Sand, Sand:1]
+    CLOCK:
+      amount: 1
+      xp: 100
+      drop:
+        chance: 0.001
+        level: 500
+        from: [Clay]
+    COBWEB:
+      amount: 1
+      xp: 150
+      drop:
+        chance: 0.05
+        level: 750
+        from: [Clay]
+    STRING:
+      amount: 1
+      xp: 200
+      drop:
+        chance: 0.05
+        level: 250
+        from: [Clay]
+    GLOWSTONE_DUST:
+      amount: 1
+      xp: 80
+      drop:
+        chance: 0.05
+        level: 25
+        from: [Dirt, Podzol, Grass, Sand, Sand:1, Mycelium]
+    RECORD_13:
+      amount: 1
+      xp: 3000
+      drop:
+        chance: 0.0005
+        level: 250
+        from: [Dirt, Podzol, Grass, Sand, Sand:1, Gravel, Clay, Mycelium, Soul_Sand]
+    RECORD_CAT:
+      amount: 1
+      xp: 3000
+      drop:
+        chance: 0.0005
+        level: 250
+        from: [Dirt, Podzol, Grass, Sand, Sand:1, Gravel, Clay, Mycelium, Soul_Sand]
+    DIAMOND:
+      amount: 1
+      xp: 1000
+      drop:
+        chance: 0.0013
+        level: 350
+        from: [Dirt, Podzol, Grass, Sand, Sand:1, Gravel, Clay, Mycelium, Soul_Sand]
+    DYE:3: # cocoa beans
+      amount: 1
+      xp: 100
+      drop:
+        chance: 0.0133
+        level: 350
+        from: [Dirt, Podzol, Grass, Mycelium]
+    QUARTZ:
+      amount: 1
+      xp: 100
+      drop:
+        chance: 0.005
+        level: 850
+        from: [Dirt, Podzol, Sand, Sand:1, Gravel, Mycelium, Soul_Sand]
+    NAME_TAG:
+      amount: 1
+      xp: 3000
+      drop:
+        chance: 0.0005
+        level: 250
+        from: [Dirt, Podzol, Grass, Sand, Sand:1, Gravel, Clay, Mycelium, Soul_Sand]

@@ -7,10 +7,13 @@ namespace cosmicpe\mcmmo\skill\listener;
 use ArrayObject;
 use Closure;
 use cosmicpe\mcmmo\McMMO;
+use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\player\PlayerManager;
+use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Cancellable;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Event;
+use pocketmine\event\EventPriority;
 use pocketmine\player\Player;
 use ReflectionException;
 use ReflectionFunction;
@@ -27,6 +30,9 @@ final class McMMOSkillListener{
 	/** @var Closure[] */
 	private static $parser = [];
 
+	/** @var McMMOExperienceToller[] */
+	private static $experience_tollers = [];
+
 	public static function init(McMMO $plugin) : void{
 		self::$plugin = $plugin;
 
@@ -40,6 +46,26 @@ final class McMMOSkillListener{
 			}
 			return null;
 		});
+
+		self::registerParser(BlockBreakEvent::class, static function(BlockBreakEvent $event, PlayerManager $manager) : McMMOListenerParserResult{
+			$player = $event->getPlayer();
+			$mcmmo_player = $manager->get($player);
+			return $mcmmo_player !== null ? new McMMOListenerParserResult($player, $mcmmo_player) : null;
+		});
+	}
+
+	private static function getExperienceToller(Event $event) : McMMOExperienceToller{
+		return self::$experience_tollers[$id = spl_object_id($event)] ?? self::$experience_tollers[$id] = new McMMOExperienceToller();
+	}
+
+	private static function removeExperienceToller(Event $event, ?McMMOPlayer $player) : void{
+		if(isset(self::$experience_tollers[$id = spl_object_id($event)])){
+			$toller = self::$experience_tollers[$id];
+			unset(self::$experience_tollers[$id]);
+			if($player !== null && (!($event instanceof Cancellable) || !$event->isCancelled())){
+				$toller->apply($player);
+			}
+		}
 	}
 
 	public static function registerEvent(int $priority, Closure $callback) : void{
@@ -54,18 +80,24 @@ final class McMMOSkillListener{
 			self::$callbacks[$priority][$event_class] = $events = new ArrayObject();
 			try{
 				$manager = self::$plugin->getPlayerManager();
-				self::$plugin->getServer()->getPluginManager()->registerEvent($event_class, static function(Event $event) use ($events, $event_class, $manager) : void{
+				$plugin_manager = self::$plugin->getServer()->getPluginManager();
+				$plugin_manager->registerEvent($event_class, static function(Event $event) use ($events, $event_class, $manager) : void{
 					/** @var McMMOListenerParserResult $result */
 					$result = (McMMOSkillListener::$parser[$event_class])($event, $manager);
 					if($result !== null){
+						$toller = self::getExperienceToller($event);
 						foreach($events as $ev){
-							$ev($event, $result->player, $result->mcmmo_player);
+							$ev($event, $result->player, $result->mcmmo_player, $toller);
 							if($event instanceof Cancellable && $event->isCancelled()){
 								break;
 							}
 						}
 					}
 				}, $priority, self::$plugin);
+
+				$plugin_manager->registerEvent($event_class, static function(Event $event) use ($event_class, $manager) : void{
+					self::removeExperienceToller($event, (McMMOSkillListener::$parser[$event_class])($event, $manager)->mcmmo_player ?? null);
+				}, EventPriority::MONITOR, self::$plugin, true);
 			}catch(ReflectionException $e){
 				throw new RuntimeException($e);
 			}

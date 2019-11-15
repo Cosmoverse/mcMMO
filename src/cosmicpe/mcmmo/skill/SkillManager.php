@@ -9,6 +9,7 @@ use cosmicpe\mcmmo\player\PlayerManager;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Acrobatics;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Dodge;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Roll;
+use cosmicpe\mcmmo\skill\gathering\excavation\Excavation;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
 use pocketmine\plugin\Plugin;
 
@@ -36,6 +37,9 @@ final class SkillManager{
 			new Dodge($dodge["min-level"], $dodge["max-level"], $dodge["max-chance"], $dodge["damage-amplification"], $dodge["disallowed-causes"]),
 			new Roll($roll["max-level"], $roll["max-chance"], $roll["damage-reduction"])
 		));
+
+		["experiences" => $experiences, "treasures" => $treasures] = $config["excavation"];
+		self::register($plugin, new Excavation($experiences, $treasures));
 	}
 
 	public static function register(Plugin $plugin, Skill $skill) : void{

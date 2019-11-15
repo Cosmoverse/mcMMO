@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace cosmicpe\mcmmo\skill\combat\acrobatics;
 
 use cosmicpe\mcmmo\player\McMMOPlayer;
+use cosmicpe\mcmmo\skill\listener\McMMOExperienceToller;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
 use cosmicpe\mcmmo\skill\SkillIds;
 use cosmicpe\mcmmo\skill\SkillManager;
@@ -20,33 +21,35 @@ class AcrobaticsListener implements Listener{
 		/** @var Acrobatics $acrobatics */
 		$acrobatics = SkillManager::get(SkillIds::ACROBATICS);
 
-		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player) use($acrobatics) : void{
+		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics) : void{
 			$dodge = $acrobatics->getDodge();
 			if($dodge->isCauseAllowed($event->getCause())){
 				$damage = $event->getFinalDamage();
 				if($damage < $player->getHealth() && $dodge->process($mcmmo_player->getSkill($acrobatics)->getExperience()->getLevel())){
 					$event->setBaseDamage($event->getBaseDamage() * 0.5);
-					$player->sendMessage(TextFormat::GREEN . "**Dodged**");
-					$mcmmo_player->increaseSkillExperience($acrobatics, (int) floor(120 * $damage));
+					$toller->add($acrobatics, (int) floor(120 * $damage), static function() use($player) : void{
+						$player->sendMessage(TextFormat::GREEN . "**Dodged**");
+					});
 				}
 			}
 		});
 
-		McMMOSkillListener::registerEvent(EventPriority::HIGH, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player) use($acrobatics) : void{
-			$skill = $mcmmo_player->getSkill($acrobatics);
-			$roll = $acrobatics->getRoll();
-			$damage = $event->getFinalDamage();
-			$graceful = $player->isSneaking();
-			if($roll_processed = $roll->process($skill->getExperience()->getLevel(), $graceful ? 2.0 : 1.0)){
-				$new_damage = $event->getBaseDamage() - $roll->getDamageReduction($graceful);
-				if($new_damage > 0){
-					$event->setBaseDamage($new_damage);
+		McMMOSkillListener::registerEvent(EventPriority::HIGH, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics) : void{
+			if($event->getCause() === EntityDamageEvent::CAUSE_FALL){
+				$skill = $mcmmo_player->getSkill($acrobatics);
+				$roll = $acrobatics->getRoll();
+				$damage = $event->getFinalDamage();
+				$graceful = $player->isSneaking();
+				if($roll_processed = $roll->process($skill->getExperience()->getLevel(), $graceful ? 2.0 : 1.0)){
+					$event->setBaseDamage(max(0, $event->getBaseDamage() - $roll->getDamageReduction($graceful)));
+					$cb = static function() use($player, $graceful) : void{
+						$player->sendMessage($graceful ? TextFormat::GREEN . "**Graceful Landing**" : TextFormat::ITALIC . "**Rolled**");
+					};
 				}else{
-					$event->setCancelled();
+					$cb = null;
 				}
-				$player->sendMessage($graceful ? TextFormat::GREEN . "**Graceful Landing**" : TextFormat::ITALIC . "**Rolled**");
+				$toller->add($acrobatics, $acrobatics->getFallXp($player, $damage, $roll_processed), $cb);
 			}
-			$mcmmo_player->increaseSkillExperience($acrobatics, $acrobatics->getFallXp($player, $damage, $roll_processed));
 		});
 	}
 }
