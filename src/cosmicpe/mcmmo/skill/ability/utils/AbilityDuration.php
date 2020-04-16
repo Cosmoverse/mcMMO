@@ -42,6 +42,6 @@ final class AbilityDuration{
 	}
 
 	public function get(int $level) : int{
-		return min($this->base + (((int) floor($this->increase_per / $level)) * $this->increase_by), $this->cap);
+		return min($this->base + (((int) floor($level / $this->increase_per)) * $this->increase_by), $this->cap);
 	}
 }
