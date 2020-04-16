@@ -9,6 +9,9 @@ use cosmicpe\mcmmo\utils\NumberUtils;
 
 class Roll extends AcrobaticsSubSkill{
 
+	public const GRACEFUL_ROLL_AMPLIFIER = 2.0;
+	public const DEFAULT_ROLL_AMPLIFIER = 1.0;
+
 	/** @var int */
 	protected $max_level;
 
@@ -36,7 +39,11 @@ class Roll extends AcrobaticsSubSkill{
 		return $this->damage_reduction * ($graceful ? 2 : 1);
 	}
 
-	public function process(int $level, float $amplifier = 1.0) : bool{
-		return NumberUtils::getRandomBool($amplifier * $this->max_chance * (min($level, $this->max_level) / $this->max_level));
+	public function getChance(int $level, float $amplifier = self::DEFAULT_ROLL_AMPLIFIER) : float{
+		return $amplifier * $this->max_chance * (min($level, $this->max_level) / $this->max_level);
+	}
+
+	public function process(int $level, float $amplifier = self::DEFAULT_ROLL_AMPLIFIER) : bool{
+		return NumberUtils::getRandomBool($this->getChance($level, $amplifier));
 	}
 }

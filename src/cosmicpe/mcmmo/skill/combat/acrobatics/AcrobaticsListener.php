@@ -42,7 +42,7 @@ class AcrobaticsListener implements Listener{
 				$skill = $mcmmo_player->getSkill($acrobatics);
 				$damage = $event->getFinalDamage();
 				$graceful = $player->isSneaking();
-				if($roll_processed = $roll->process($skill->getExperience()->getLevel(), $graceful ? 2.0 : 1.0)){
+				if($roll_processed = $roll->process($skill->getExperience()->getLevel(), $graceful ? Roll::GRACEFUL_ROLL_AMPLIFIER : Roll::DEFAULT_ROLL_AMPLIFIER)){
 					$event->setBaseDamage(max(0, $event->getBaseDamage() - $roll->getDamageReduction($graceful)));
 					$cb = static function() use($player, $graceful) : void{
 						$player->sendMessage($graceful ? TextFormat::GREEN . "**Graceful Landing**" : TextFormat::ITALIC . "**Rolled**");

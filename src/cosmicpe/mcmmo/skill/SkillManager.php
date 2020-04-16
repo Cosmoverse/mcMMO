@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill;
 
+use Closure;
 use cosmicpe\mcmmo\McMMO;
 use cosmicpe\mcmmo\player\PlayerManager;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Acrobatics;
@@ -20,11 +21,33 @@ final class SkillManager{
 	/** @var Skill[] */
 	private static $skills = [];
 
+	/** @var bool */
+	private static $init = false;
+
+	/** @var Closure[] */
+	private static $on_init = [];
+
+	public static function load(McMMO $plugin) : void{
+		self::registerDefaults($plugin);
+	}
+
 	public static function init(McMMO $plugin) : void{
 		self::$player_manager = $plugin->getPlayerManager();
 		McMMOSkillListener::init($plugin);
 
-		self::registerDefaults($plugin);
+		self::$init = true;
+		foreach(self::$on_init as $cb){
+			$cb();
+		}
+		self::$on_init = [];
+	}
+
+	private static function onInit(Closure $callback) : void{
+		if(self::$init){
+			$callback();
+		}else{
+			self::$on_init[] = $callback;
+		}
 	}
 
 	private static function registerDefaults(McMMO $plugin) : void{
@@ -42,14 +65,29 @@ final class SkillManager{
 	public static function register(Plugin $plugin, Skill $skill) : void{
 		self::$skills[$skill->getIdentifier()] = $skill;
 		if($skill instanceof Listenable){
-			$plugin_manager = $plugin->getServer()->getPluginManager();
-			foreach($skill->getListeners() as $listener){
-				$plugin_manager->registerEvents($listener, $plugin);
-			}
+			self::onInit(static function() use($skill, $plugin) : void{
+				$plugin_manager = $plugin->getServer()->getPluginManager();
+				foreach($skill->getListeners() as $listener){
+					$plugin_manager->registerEvents($listener, $plugin);
+				}
+			});
 		}
 	}
 
 	public static function get(string $identifier) : Skill{
 		return self::$skills[$identifier];
+	}
+
+	public static function getNullable(string $identifier) : ?Skill{
+		return self::$skills[$identifier] ?? null;
+	}
+
+	/**
+	 * Returns all skills indexed by their identifier.
+	 *
+	 * @return Skill[]
+	 */
+	public static function getAll() : array{
+		return self::$skills;
 	}
 }

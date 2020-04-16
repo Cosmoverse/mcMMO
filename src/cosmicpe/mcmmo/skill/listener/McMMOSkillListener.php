@@ -15,7 +15,6 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Event;
 use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerEvent;
-use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemUseEvent;
 use pocketmine\player\Player;
 use ReflectionException;
@@ -50,13 +49,13 @@ final class McMMOSkillListener{
 			return null;
 		});
 
-		self::registerParser(BlockBreakEvent::class, static function(BlockBreakEvent $event, PlayerManager $manager) : McMMOListenerParserResult{
+		self::registerParser(BlockBreakEvent::class, static function(BlockBreakEvent $event, PlayerManager $manager) : ?McMMOListenerParserResult{
 			$player = $event->getPlayer();
 			$mcmmo_player = $manager->get($player);
 			return $mcmmo_player !== null ? new McMMOListenerParserResult($player, $mcmmo_player) : null;
 		});
 
-		self::registerParser(PlayerItemUseEvent::class, static function(PlayerEvent $event, PlayerManager $manager) : McMMOListenerParserResult{
+		self::registerParser(PlayerItemUseEvent::class, static function(PlayerEvent $event, PlayerManager $manager) : ?McMMOListenerParserResult{
 			$player = $event->getPlayer();
 			$mcmmo_player = $manager->get($player);
 			return $mcmmo_player !== null ? new McMMOListenerParserResult($player, $mcmmo_player) : null;

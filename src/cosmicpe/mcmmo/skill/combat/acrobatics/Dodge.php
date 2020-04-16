@@ -62,7 +62,11 @@ class Dodge extends AcrobaticsSubSkill{
 		return !$this->disallowed_causes->contains($cause);
 	}
 
+	public function getChance(int $level, float $amplifier = 1.0) : float{
+		return $level >= $this->min_level ? $amplifier * $this->max_chance * (min($level, $this->max_level) / $this->max_level) : 0.0;
+	}
+
 	public function process(int $level, float $amplifier = 1.0) : bool{
-		return $level >= $this->min_level && NumberUtils::getRandomBool($amplifier * $this->max_chance * (min($level, $this->max_level) / $this->max_level));
+		return NumberUtils::getRandomBool($this->getChance($level, $amplifier));
 	}
 }

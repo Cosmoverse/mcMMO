@@ -1,0 +1,154 @@
+# mcMMO Commands
+
+# Skill commands are commands that are skill dependent.
+# These commands parse the player's skill and replace wildcards
+# specified in the configured message.
+#
+# Wildcards in "command" include:
+#   {SKILL}         - The name of the skill
+#   {LEVEL}         - The player's skill's level
+#   {TOTAL_XP}      - The player's skill's total XP
+#   {LEVEL_MAX_XP}  - The player's skill's level's max XP
+#   {COMMAND}       - The name of the command
+#
+# There are a few more wildcards for specific to each skill.
+#
+# Wildcards in "guide" include:
+#   {SKILL}         - The name of the skill
+#   {PAGE}          - The current page's number
+#   {PAGES}         - The total number of pages
+#
+# Format:
+# skill_commands:
+#   the_command_name_here:
+#     skill: the_skill_identifier_here
+#     command: [
+#       "An array of messages to send when player types /skill_command"
+#     ]
+#     guide: [
+#       [
+#         "An array of messages on page 1 that are sent when player types /skill_command ?"
+#       ]
+#       [
+#         "An array of messages on page 1 that are sent when player types /skill_command ? 2"
+#       ]
+#     ]
+skill_commands:
+  acrobatics:
+    skill: mcmmo:acrobatics
+    command: [
+      "&c-----[]&a{SKILL}&c[]-----",
+      "&8XP GAIN: &fFalling",
+      "&8LVL: &a{LEVEL} &3XP&e(&6{TOTAL_XP}&e/&7{LEVEL_MAX_XP})",
+      "&c-----[]&aEFFECTS&c[]-----",
+      "&3Roll: &aReduces or Negates fall damage",
+      "&3Graceful Roll: &aTwice as effective as a normal Roll",
+      "&3Dodge: &aReduce attack damage by half",
+      "&c-----[]&aYOUR STATS&c[]-----",
+      "&cRoll Chance: &e{ROLL_CHANCE}%",
+      "&cGraceful Roll Chance: &e{GRACEFUL_ROLL_CHANCE}%",
+      "&cDodge Chance: &e{DODGE_CHANCE}%",
+      "&3Guide for {SKILL} available - type /{COMMAND} ? [page]"
+    ]
+    guide: [
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3About Acrobatics:",
+        "&eAcrobatics is the art of moving gracefully in mcMMO.",
+        "&eIt provides combat bonuses and environmental damage bonuses.",
+        "",
+        "&3XP GAIN:",
+        "&eTo gain XP in this skill you need to perform a dodge in combat or survive falls from heights that damage you.",
+        "",
+        "Page {PAGE} of {PAGES}"
+      ],
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3How does Rolling work?",
+        "&eYou have a passive chance when you take fall damage to negate the damage done. You can hold the sneak button to double your chances during the fall.",
+        "&eThis triggers a Graceful Roll instead of a standard one.",
+        "&eGraceful Rolls are like regular rolls but are twice as likely to occur and provide more damage safety than regular rolls.",
+        "&eRolling chance is tied to your skill level.",
+        "Page {PAGE} of {PAGES}"
+      ],
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3How does Dodge work?",
+        "&eDodge is a passive chance when you are",
+        "&einjured in combat to halve the damage taken.",
+        "&eIt is tied to your skill level.",
+        "Page {PAGE} of {PAGES}"
+      ]
+    ]
+  excavation:
+    skill: mcmmo:excavation
+    command: [
+      "&c-----[]&a{SKILL}&c[]-----",
+      "&8XP GAIN: &fDigging and finding treasures",
+      "&8LVL: &a{LEVEL} &3XP&e(&6{TOTAL_XP}&e/&7{LEVEL_MAX_XP})",
+      "&c-----[]&aEFFECTS&c[]-----",
+      "&3Giga Drill Breaker (ABILITY): &a3x Drop Rate, 3x EXP, +Speed",
+      "&3Treasure Hunter: &aAbility to dig for treasure",
+      "&c-----[]&aYOUR STATS&c[]-----",
+      "&cGiga Drill Breaker Length: &e{GIGA_DRILL_BREAKER_LENGTH}s",
+      "&3Guide for {SKILL} available - type /{COMMAND} ? [page]"
+    ]
+    guide: [
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3About Excavation:",
+        "&eExcavation is the act of digging up dirt to find treasures.",
+        "&eBy excavating the land you will find treasures.",
+        "&eThe more you do this the more treasures you can find.",
+        "",
+        "&3XP GAIN:",
+        "&eTo gain XP in this skill you must dig with a shovel in hand.",
+        "&rOnly certain materials can be dug up for treasures and XP.",
+        "Page {PAGE} of {PAGES}"
+      ],
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3Compatible Materials:",
+        "&e{COMPATIBLE_MATERIALS}",
+        "Page {PAGE} of {PAGES}"
+      ],
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3How to use Giga Drill Breaker:",
+        "&eWith a shovel in hand right click to ready your tool.",
+        "&eOnce in the state you have about 4 seconds to make",
+        "&econtact with Excavation compatible materials this wil",
+        "&eactivate Giga Drill Breaker.",
+        "Page {PAGE} of {PAGES}"
+      ],
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3What is Giga Drill Breaker?",
+        "&eGiga Drill Breaker is an ability with a cooldown",
+        "&etied to Excavation skill. It triples your chance",
+        "&eof finding treasures and enables instant break",
+        "&eon Excavation materials.",
+        "Page {PAGE} of {PAGES}"
+      ],
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&3What does Treasure Hunter work?",
+        "&eEvery possible treasure for Excavation has its own",
+        "&eskill level requirement for it to drop, as a result it's",
+        "&edifficult to say how much it is helping you.",
+        "&eJust keep in mind that the higher your Excavation skill",
+        "&eis, the more treasures that can be found.",
+        "&eAnd also keep in mind that each type of Excavation",
+        "&ecompatible material has its own unique list of treasures.",
+        "Page {PAGE} of {PAGES}"
+      ],
+      [
+        "&6-=&a{SKILL} Guide&6=-",
+        "&eIn other words you will find different treasures in Dirt",
+        "&ethan you would in Gravel.",
+        "&3Notes about Excavation:",
+        "&eExcavation drops are completely customizeable",
+        "&eSo results vary server to server.",
+        "Page {PAGE} of {PAGES}"
+      ]
+    ]

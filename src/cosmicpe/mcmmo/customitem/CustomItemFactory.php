@@ -18,9 +18,12 @@ final class CustomItemFactory{
 	/** @var CustomItem[]|string[] */
 	private static $custom_items = [];
 
+	public static function load(McMMO $plugin) : void{
+		self::registerDefaults();
+	}
+
 	public static function init(McMMO $plugin) : void{
 		$plugin->getServer()->getPluginManager()->registerEvents(new CustomItemListener(), $plugin);
-		self::registerDefaults();
 	}
 
 	private static function registerDefaults() : void{

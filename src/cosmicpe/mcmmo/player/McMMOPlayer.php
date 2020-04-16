@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace cosmicpe\mcmmo\player;
 
 use cosmicpe\mcmmo\event\player\McMMOPlayerSkillExperienceChangeEvent;
+use cosmicpe\mcmmo\skill\experience\SkillExperienceManager;
 use cosmicpe\mcmmo\skill\Skill;
 use cosmicpe\mcmmo\skill\SkillInstance;
 use cosmicpe\mcmmo\skill\subskill\SubSkill;
@@ -39,6 +40,10 @@ final class McMMOPlayer{
 		$this->skills = $skills;
 		$this->sub_skills = $sub_skills;
 		$this->ability_handler = new PlayerAbilityHandler($this);
+	}
+
+	public function onDisconnect() : void{
+		$this->ability_handler->removeCurrent();
 	}
 
 	public function getUniqueId() : UUID{
@@ -102,5 +107,17 @@ final class McMMOPlayer{
 			return true;
 		}
 		return false;
+	}
+
+	public function increaseSkillLevel(Skill $skill, int $value) : bool{
+		return $this->setSkillLevel($skill, $this->getSkill($skill)->getExperience()->getLevel() + $value);
+	}
+
+	public function decreaseSkillLevel(Skill $skill, int $value) : bool{
+		return $this->setSkillLevel($skill, $this->getSkill($skill)->getExperience()->getLevel() - $value);
+	}
+
+	public function setSkillLevel(Skill $skill, int $value) : bool{
+		return $this->setSkillExperience($skill, SkillExperienceManager::get()->getExperienceFromLevel($value));
 	}
 }

@@ -18,6 +18,13 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
+/**
+ * GigaDrillShovel custom item is an item that CONTAINS the original shovel's
+ * efficiency enchantment level while overriding it with a possibly higher
+ * enchantment level.
+ * This is a hacky custom item who's only purpose is to increase client-sided
+ * mining speed.
+ */
 class GigaDrillShovel extends CustomItem implements Interactable, Movable{
 
 	private const TAG_BUFF = "Buff";

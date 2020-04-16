@@ -20,7 +20,7 @@ final class PlayerManager{
 	/** @var IDatabase */
 	private $database;
 
-	public function __construct(McMMO $plugin, IDatabase $database){
+	public function init(McMMO $plugin, IDatabase $database) : void{
 		$plugin_manager = $plugin->getServer()->getPluginManager();
 
 		/** @noinspection PhpUnhandledExceptionInspection */
@@ -55,6 +55,7 @@ final class PlayerManager{
 	}
 
 	public function unload(McMMOPlayer $player) : void{
+		$player->onDisconnect();
 		$this->database->save($player);
 		unset($this->players[$player->getUniqueId()->toBinary()]);
 	}

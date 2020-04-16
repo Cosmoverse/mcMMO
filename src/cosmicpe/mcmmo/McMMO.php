@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo;
 
+use cosmicpe\mcmmo\command\McMMOCommandManager;
 use cosmicpe\mcmmo\customitem\CustomItemFactory;
 use cosmicpe\mcmmo\database\IDatabase;
 use cosmicpe\mcmmo\database\sqlite\SQLiteDatabase;
@@ -29,16 +30,22 @@ final class McMMO extends PluginBase{
 	/** @var PlayerManager */
 	private $player_manager;
 
-	protected function onEnable() : void{
+	protected function onLoad() : void{
 		self::$instance = $this;
+		$this->player_manager = new PlayerManager();
+		CustomItemFactory::load($this);
+		SkillManager::load($this);
+	}
 
+	protected function onEnable() : void{
 		$this->parseExperienceFormula();
 
 		$this->database = new SQLiteDatabase($this);
-		$this->player_manager = new PlayerManager($this, $this->database);
+		$this->player_manager->init($this, $this->database);
 
 		CustomItemFactory::init($this);
 		SkillManager::init($this);
+		McMMOCommandManager::init($this);
 	}
 
 	private function parseExperienceFormula() : void{
@@ -59,5 +66,6 @@ final class McMMO extends PluginBase{
 
 	protected function onDisable() : void{
 		$this->database->close();
+		self::$instance = null;
 	}
 }

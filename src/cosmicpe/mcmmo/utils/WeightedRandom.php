@@ -15,14 +15,18 @@ abstract class WeightedRandom{
 	private $probabilities = [];
 
 	/** @var int[] */
-	private $aliases = [];
+	private $aliases;
 
 	/** @var Random */
 	private $random;
 
-	/** @var array */
+	/** @var mixed[] */
 	protected $indexes = [];
 
+	/**
+	 * @param mixed $value
+	 * @param float $weight
+	 */
 	final public function add($value, float $weight) : void{
 		$this->probabilities[] = $weight;
 		$this->indexes[] = $value;
@@ -32,15 +36,24 @@ abstract class WeightedRandom{
 		return count($this->probabilities);
 	}
 
-	final public function setup(bool $fill_null = false) : void{
-		if($fill_null){
-			$this->add(null, 1.0 - (array_sum($this->probabilities) / $this->count()));
+	private function normalize() : void{
+		$sum = array_sum($this->probabilities);
+		foreach($this->probabilities as &$weight){
+			$weight /= $sum;
+		}
+	}
+
+	final public function setup() : void{
+		$probabilities_c = $this->count();
+		if($probabilities_c === 0){
+			return;
 		}
 
 		// Store the underlying generator.
 		$this->random = new Random();
+		$this->aliases = [];
 
-		$probabilities_c = $this->count();
+		$this->normalize();
 
 		// Compute the average probability and cache it for later use.
 		$average = 1.0 / $probabilities_c;
@@ -118,20 +131,22 @@ abstract class WeightedRandom{
 
 	/**
 	 * @param int $count
-	 * @return int[]|Generator
+	 * @return Generator<int>
 	 */
 	final public function generateIndexes(int $count) : Generator{
 		$probabilities_c = count($this->probabilities);
-		while(--$count >= 0){
-			$index = $this->random->nextBoundedInt($probabilities_c);
-			yield $this->random->nextFloat() <= $this->probabilities[$index] ? $index : $this->aliases[$index];
+		if($probabilities_c > 0){
+			while(--$count >= 0){
+				$index = $this->random->nextBoundedInt($probabilities_c);
+				yield $this->random->nextFloat() <= $this->probabilities[$index] ? $index : $this->aliases[$index];
+			}
 		}
 	}
 
 	/**
 	 * Returns $this->indexes[$this->generateIndex($count)]
 	 * @param int $count
-	 * @return Generator
+	 * @return Generator<mixed>
 	 */
 	abstract public function generate(int $count) : Generator;
 }
