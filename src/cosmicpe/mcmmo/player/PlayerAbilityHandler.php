@@ -41,7 +41,7 @@ final class PlayerAbilityHandler{
 		if($this->ability !== null){
 			self::$scheduler->cancelTask($this->ability_task_id);
 			if($this->ability instanceof AbilityRemoveHandler){
-				$this->ability->handleRemove($this->mcmmo_player);
+				$this->ability->onRemove($this->mcmmo_player);
 			}
 			$this->ability = null;
 			$this->ability_task_id = null;

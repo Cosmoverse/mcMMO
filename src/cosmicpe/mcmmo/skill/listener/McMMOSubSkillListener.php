@@ -35,7 +35,7 @@ final class McMMOSubSkillListener{
 								$ev = new McMMOPlayerAbilityActivateEvent($mcmmo_player, $ability, $duration);
 								$ev->call();
 								if(!$ev->isCancelled()){
-									$ability->handleAdd($player, $mcmmo_player, $item);
+									$ability->onAdd($player, $mcmmo_player, $item);
 									$player->sendMessage(TextFormat::GREEN . "* " . $sub_skill->getName() . " ACTIVATED *");
 									$handler->setCurrent($ability, $ev->getDuration(), static function() use ($player, $sub_skill) : void{
 										if($player->isOnline()){

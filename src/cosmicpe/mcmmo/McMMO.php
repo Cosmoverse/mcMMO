@@ -8,6 +8,7 @@ use cosmicpe\mcmmo\command\McMMOCommandManager;
 use cosmicpe\mcmmo\customitem\CustomItemFactory;
 use cosmicpe\mcmmo\database\IDatabase;
 use cosmicpe\mcmmo\database\sqlite\SQLiteDatabase;
+use cosmicpe\mcmmo\integration\IntegrationManager;
 use cosmicpe\mcmmo\player\PlayerManager;
 use cosmicpe\mcmmo\skill\experience\ExponentialSkillExperience;
 use cosmicpe\mcmmo\skill\experience\SkillExperienceManager;
@@ -30,6 +31,9 @@ final class McMMO extends PluginBase{
 	/** @var PlayerManager */
 	private $player_manager;
 
+	/** @var IntegrationManager|null */
+	private $integration_manager;
+
 	protected function onLoad() : void{
 		self::$instance = $this;
 		$this->player_manager = new PlayerManager();
@@ -38,6 +42,7 @@ final class McMMO extends PluginBase{
 	}
 
 	protected function onEnable() : void{
+		$this->getIntegrationManager()->init();
 		$this->parseExperienceFormula();
 
 		$this->database = new SQLiteDatabase($this);
@@ -62,6 +67,10 @@ final class McMMO extends PluginBase{
 
 	public function getPlayerManager() : PlayerManager{
 		return $this->player_manager;
+	}
+
+	public function getIntegrationManager() : IntegrationManager{
+		return $this->integration_manager ?? $this->integration_manager = new IntegrationManager($this);
 	}
 
 	protected function onDisable() : void{

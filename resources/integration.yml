@@ -1,0 +1,8 @@
+# Config file for mcMMO v0.0.1
+
+# Set which fireworks plugin to use.
+# Default: BlockHorizons_Fireworks
+# Use "custom" to define your own value during PluginBase::onLoad()
+# Use "none" or else
+# Use McMMO::getInstance()->getIntegrationManager()->setFireworkWrapper() to set a custom firework wrapper.
+firework: BlockHorizons_Fireworks

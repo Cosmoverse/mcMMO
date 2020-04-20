@@ -8,5 +8,5 @@ use cosmicpe\mcmmo\player\McMMOPlayer;
 
 interface AbilityRemoveHandler{
 
-	public function handleRemove(McMMOPlayer $mcmmo_player) : void;
+	public function onRemove(McMMOPlayer $mcmmo_player) : void;
 }

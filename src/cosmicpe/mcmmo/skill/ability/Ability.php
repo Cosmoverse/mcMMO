@@ -16,5 +16,5 @@ interface Ability{
 
 	public function getDuration(Player $player, McMMOPlayer $mcmmo_player, Item $item) : int;
 
-	public function handleAdd(Player $player, McMMOPlayer $mcmmo_player, Item $item) : void;
+	public function onAdd(Player $player, McMMOPlayer $mcmmo_player, Item $item) : void;
 }
