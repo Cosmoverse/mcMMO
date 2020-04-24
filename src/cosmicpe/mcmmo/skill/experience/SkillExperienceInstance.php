@@ -76,10 +76,13 @@ final class SkillExperienceInstance{
 
 		$this->setValue(SkillExperienceManager::get()->getExperienceFromLevel($level));
 		if($percentage > 0.0){
-			$this->addValue((SkillExperienceManager::get()->getExperienceFromLevel($this->getLevel() + 1) - $this->value) * $percentage);
+			$this->addValue((int) ((SkillExperienceManager::get()->getExperienceFromLevel($this->getLevel() + 1) - $this->value) * $percentage));
 		}
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function __debugInfo(){
 		return [
 			"experience" => $this->value,

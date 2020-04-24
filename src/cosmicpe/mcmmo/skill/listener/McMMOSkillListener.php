@@ -26,7 +26,7 @@ final class McMMOSkillListener{
 	/** @var McMMO */
 	private static $plugin;
 
-	/** @var ArrayObject<Closure>[][] */
+	/** @var ArrayObject<string, Closure>[][] */
 	private static $callbacks = [];
 
 	/** @var Closure[] */
@@ -83,7 +83,7 @@ final class McMMOSkillListener{
 		try{
 			$event_class = (new ReflectionFunction($callback))->getParameters()[0]->getClass()->getName();
 		}catch(ReflectionException $e){
-			throw new RuntimeException($e);
+			throw new RuntimeException($e->getMessage());
 		}
 
 		if(!isset(self::$callbacks[$priority][$event_class])){
@@ -109,7 +109,7 @@ final class McMMOSkillListener{
 					self::removeExperienceToller($event, (McMMOSkillListener::$parser[$event_class])($event, $manager)->mcmmo_player ?? null);
 				}, EventPriority::MONITOR, self::$plugin, true);
 			}catch(ReflectionException $e){
-				throw new RuntimeException($e);
+				throw new RuntimeException($e->getMessage());
 			}
 		}
 

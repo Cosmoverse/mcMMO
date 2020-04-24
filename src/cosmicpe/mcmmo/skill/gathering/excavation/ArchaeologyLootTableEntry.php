@@ -23,6 +23,12 @@ final class ArchaeologyLootTableEntry{
 	/** @var Set<int> */
 	private $applicable_blocks;
 
+	/**
+	 * @param Item $item
+	 * @param int $experience
+	 * @param int $level_requirement
+	 * @param string[] $applicable_blocks
+	 */
 	public function __construct(Item $item, int $experience, int $level_requirement, array $applicable_blocks){
 		$this->item = $item;
 		$this->experience = $experience;
@@ -30,7 +36,7 @@ final class ArchaeologyLootTableEntry{
 
 		$this->applicable_blocks = new Set();
 		foreach($applicable_blocks as $block_id){
-			$this->applicable_blocks->add(ItemFactory::fromString($block_id)->getBlock()->getId());
+			$this->applicable_blocks->add(ItemFactory::getInstance()->fromString($block_id)->getBlock()->getId());
 		}
 	}
 

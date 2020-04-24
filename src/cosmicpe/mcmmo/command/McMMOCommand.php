@@ -30,5 +30,10 @@ abstract class McMMOCommand extends Command implements PluginIdentifiableCommand
 		}
 	}
 
+	/**
+	 * @param CommandSender $sender
+	 * @param string $commandLabel
+	 * @param string[] $args
+	 */
 	abstract protected function onExecute(CommandSender $sender, string $commandLabel, array $args) : void;
 }

@@ -18,7 +18,7 @@ use pocketmine\plugin\PluginBase;
 
 final class McMMO extends PluginBase{
 
-	/** @var McMMO */
+	/** @var McMMO|null */
 	private static $instance;
 
 	public static function getInstance() : McMMO{

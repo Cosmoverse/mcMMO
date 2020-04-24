@@ -20,6 +20,9 @@ class GigaDrillBreaker extends ArchaeologySubSkill implements BuffableAbilitySub
 	/** @var int */
 	private $cooldown;
 
+	/**
+	 * @param array<string, mixed> $config
+	 */
 	public function __construct(array $config){
 		["duration" => $duration_config, "enchant-buff" => $enchantment_buff, "cooldown" => $cooldown] = $config;
 		$this->duration = AbilityDuration::parse($duration_config);

@@ -18,6 +18,9 @@ class Archaeology extends ArchaeologySubSkill{
 	/** @var ArchaeologyLootTable */
 	protected $loot_table;
 
+	/**
+	 * @param array<string, mixed> $archaeology_config
+	 */
 	public function __construct(array $archaeology_config){
 		$this->max_loot_drops = $archaeology_config["max-drops"];
 		$this->loot_table = new ArchaeologyLootTable();
@@ -27,13 +30,13 @@ class Archaeology extends ArchaeologySubSkill{
 			"drop" => $drop_config
 		]){
 			$this->loot_table->add(new ArchaeologyLootTableEntry(
-				ItemFactory::fromString($item_string)->setCount($amount),
+				ItemFactory::getInstance()->fromString($item_string)->setCount($amount),
 				$xp,
 				$drop_config["level"],
 				$drop_config["from"],
 			), $drop_config["chance"]);
 		}
-		$this->loot_table->setup(true);
+		$this->loot_table->setup();
 	}
 
 	public function getIdentifier() : string{

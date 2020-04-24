@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace cosmicpe\mcmmo\event\player;
+namespace cosmicpe\mcmmo\event\player\skill;
 
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\experience\SkillExperienceManager;

@@ -8,6 +8,10 @@ use InvalidArgumentException;
 
 final class AbilityDuration{
 
+	/**
+	 * @param array<string, mixed> $config
+	 * @return AbilityDuration
+	 */
 	public static function parse(array $config) : AbilityDuration{
 		return new AbilityDuration($config["base"], $config["increase"]["per"], $config["increase"]["by"], $config["max"] ?? -1);
 	}

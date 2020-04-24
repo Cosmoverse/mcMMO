@@ -36,6 +36,11 @@ final class CustomItemFactory{
 		self::$custom_items[$class::getIdentifier()] = $class;
 	}
 
+	/**
+	 * @param string $identifier
+	 * @param mixed ...$args
+	 * @return Item
+	 */
 	public static function get(string $identifier, ...$args) : Item{
 		/** @var CustomItem $custom_item */
 		$custom_item = new self::$custom_items[$identifier](...$args);

@@ -69,6 +69,13 @@ class McMMOSkillCommand extends McMMOCommand{
 		$this->guide_wildcards[$wildcard] = $resolution;
 	}
 
+	/**
+	 * @param Player $sender
+	 * @param McMMOPlayer $mcmmo_player
+	 * @param string $commandLabel
+	 * @param string[] $args
+	 * @return string[]
+	 */
 	private function getCommandWildcards(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : array{
 		$translation = [];
 		foreach($this->command_wildcards as $wildcard => $resolution){
@@ -77,6 +84,13 @@ class McMMOSkillCommand extends McMMOCommand{
 		return $translation;
 	}
 
+	/**
+	 * @param Player $sender
+	 * @param McMMOPlayer $mcmmo_player
+	 * @param string $commandLabel
+	 * @param string[] $args
+	 * @return string[]
+	 */
 	private function getGuideWildcards(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : array{
 		$translation = [];
 		foreach($this->guide_wildcards as $wildcard => $resolution){

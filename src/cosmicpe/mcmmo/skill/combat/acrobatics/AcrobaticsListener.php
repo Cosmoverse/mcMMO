@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill\combat\acrobatics;
 
+use cosmicpe\mcmmo\event\player\skill\combat\McMMOPlayerDodgeEvent;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\listener\McMMOExperienceToller;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
@@ -22,21 +23,28 @@ class AcrobaticsListener implements Listener{
 	public function __construct(){
 		/** @var Acrobatics $acrobatics */
 		$acrobatics = SkillManager::get(SkillIds::ACROBATICS);
+
+		/** @var Dodge $dodge */
 		$dodge = SubSkillManager::get(SubSkillIds::DODGE);
 
 		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics, $dodge) : void{
 			if($dodge->isCauseAllowed($event->getCause())){
 				$damage = $event->getFinalDamage();
 				if($damage < $player->getHealth() && $dodge->process($mcmmo_player->getSkill($acrobatics)->getExperience()->getLevel())){
-					$event->setBaseDamage($event->getBaseDamage() * 0.5);
-					$toller->add($acrobatics, (int) floor(120 * $damage), static function() use($player) : void{
-						$player->sendMessage(TextFormat::GREEN . "**Dodged**");
-					});
+					($ev = new McMMOPlayerDodgeEvent($mcmmo_player, $acrobatics, $event))->call();
+					if(!$ev->isCancelled()){
+						$event->setBaseDamage($event->getBaseDamage() * 0.5);
+						$toller->add($acrobatics, (int) floor(120 * $damage), static function() use($player) : void{
+							$player->sendMessage(TextFormat::GREEN . "**Dodged**");
+						});
+					}
 				}
 			}
 		});
 
+		/** @var Roll $roll */
 		$roll = SubSkillManager::get(SubSkillIds::ROLL);
+
 		McMMOSkillListener::registerEvent(EventPriority::HIGH, static function(EntityDamageEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($acrobatics, $roll) : void{
 			if($event->getCause() === EntityDamageEvent::CAUSE_FALL){
 				$skill = $mcmmo_player->getSkill($acrobatics);

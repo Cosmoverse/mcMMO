@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\player;
 
-use cosmicpe\mcmmo\event\player\McMMOPlayerSkillExperienceChangeEvent;
+use cosmicpe\mcmmo\event\player\skill\McMMOPlayerSkillExperienceChangeEvent;
 use cosmicpe\mcmmo\skill\experience\SkillExperienceManager;
 use cosmicpe\mcmmo\skill\Skill;
 use cosmicpe\mcmmo\skill\SkillInstance;

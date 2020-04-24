@@ -21,7 +21,10 @@ class ExcavationListener implements Listener{
 	public function __construct(){
 		/** @var Excavation $excavation */
 		$excavation = SkillManager::get(SkillIds::EXCAVATION);
+
+		/** @var Archaeology $archaeology */
 		$archaeology = SubSkillManager::get(SubSkillIds::ARCHAEOLOGY);
+
 		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(BlockBreakEvent $event, Player $player, McMMOPlayer $mcmmo_player, McMMOExperienceToller $toller) use($excavation, $archaeology) : void{
 			$block = $event->getBlock();
 			$drops = $event->getDrops();

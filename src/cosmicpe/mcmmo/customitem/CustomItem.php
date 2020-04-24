@@ -14,7 +14,7 @@ abstract class CustomItem{
 	/**
 	 * @param Item $item
 	 * @param CompoundTag $tag
-	 * @return CustomItem
+	 * @return static
 	 */
 	public static function from(Item $item, CompoundTag $tag){
 		return new static();

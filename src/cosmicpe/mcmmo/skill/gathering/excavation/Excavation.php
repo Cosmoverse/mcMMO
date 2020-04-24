@@ -17,12 +17,15 @@ use pocketmine\player\Player;
 
 class Excavation implements GatheringSkill, Listenable{
 
-	/** @var int[] */
+	/** @var array<int, int> */
 	protected $block_xp = [];
 
+	/**
+	 * @param array<string, int> $blocks_xp_config
+	 */
 	public function __construct(array $blocks_xp_config){
 		foreach($blocks_xp_config as $block_string => $xp){
-			$this->block_xp[ItemFactory::fromString($block_string)->getBlock()->getId()] = $xp;
+			$this->block_xp[ItemFactory::getInstance()->fromString($block_string)->getBlock()->getId()] = $xp;
 		}
 	}
 
@@ -51,7 +54,7 @@ class Excavation implements GatheringSkill, Listenable{
 
 		$compatible_materials = [];
 		foreach(array_keys($this->block_xp) as $identifier){
-			$compatible_materials[] = BlockFactory::get($identifier)->getName();
+			$compatible_materials[] = BlockFactory::getInstance()->get($identifier)->getName();
 		}
 		$compatible_materials = array_unique($compatible_materials);
 		sort($compatible_materials);

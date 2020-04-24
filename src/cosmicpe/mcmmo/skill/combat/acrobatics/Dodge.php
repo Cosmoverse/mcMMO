@@ -28,6 +28,13 @@ class Dodge extends AcrobaticsSubSkill{
 	/** @var Set<int> */
 	private $disallowed_causes;
 
+	/**
+	 * @param int $min_level
+	 * @param int $max_level
+	 * @param float $max_chance
+	 * @param float $damage_amplifier
+	 * @param int[] $disallowed_causes
+	 */
 	public function __construct(int $min_level, int $max_level, float $max_chance, float $damage_amplifier, array $disallowed_causes){
 		$this->max_level = $max_level;
 		$this->max_chance = $max_chance;

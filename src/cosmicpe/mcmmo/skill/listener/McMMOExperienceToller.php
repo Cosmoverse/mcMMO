@@ -11,20 +11,20 @@ use cosmicpe\mcmmo\skill\SkillManager;
 
 final class McMMOExperienceToller{
 
-	/** @var int|Closure[] */
+	/** @var McMMOExperienceTollerEntry[][] */
 	private $experiences = [];
 
 	public function add(Skill $skill, int $experience, ?Closure $success = null) : void{
 		if($experience > 0){
-			$this->experiences[$skill->getIdentifier()][] = [$experience, $success];
+			$this->experiences[$skill->getIdentifier()][] = new McMMOExperienceTollerEntry($experience, $success);
 		}
 	}
 
 	public function apply(McMMOPlayer $player) : void{
 		foreach($this->experiences as $skill => $additions){
-			foreach($additions as [$experience, $callback]){
-				if($player->increaseSkillExperience(SkillManager::get($skill), $experience) && $callback !== null){
-					$callback();
+			foreach($additions as $entry){
+				if($player->increaseSkillExperience(SkillManager::get($skill), $entry->experience) && $entry->success !== null){
+					($entry->success)();
 				}
 			}
 		}
