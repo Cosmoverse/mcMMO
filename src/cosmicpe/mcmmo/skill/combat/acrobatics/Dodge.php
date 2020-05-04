@@ -76,4 +76,8 @@ class Dodge extends AcrobaticsSubSkill{
 	public function process(int $level, float $amplifier = 1.0) : bool{
 		return NumberUtils::getRandomBool($this->getChance($level, $amplifier));
 	}
+
+	public function getCooldown() : int{
+		return 0;
+	}
 }

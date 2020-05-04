@@ -60,4 +60,8 @@ class Archaeology extends ArchaeologySubSkill{
 			}
 		}
 	}
+
+	public function getCooldown() : int{
+		return 0;
+	}
 }

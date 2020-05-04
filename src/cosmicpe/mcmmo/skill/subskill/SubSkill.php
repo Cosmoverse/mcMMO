@@ -9,4 +9,6 @@ use cosmicpe\mcmmo\skill\Identifiable;
 interface SubSkill extends Identifiable{
 
 	public function getParentIdentifier() : string;
+
+	public function getCooldown() : int;
 }

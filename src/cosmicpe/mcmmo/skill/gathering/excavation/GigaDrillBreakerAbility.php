@@ -37,7 +37,6 @@ final class GigaDrillBreakerAbility extends BuffableAbility implements AbilityRe
 		/** @var GigaDrillBreaker $sub_skill */
 		$sub_skill = SubSkillManager::get($this->getSubSkillIdentifier());
 		$player->getInventory()->setItemInHand(CustomItemFactory::get(CustomItemIds::GIGA_DRILL_SHOVEL, $item, $sub_skill->getEnchantmentBuff()));
-		$mcmmo_player->getSubSkill($sub_skill)->setCooldown($sub_skill->getCooldown());
 		$this->parentOnAdd($player, $mcmmo_player, $item);
 	}
 

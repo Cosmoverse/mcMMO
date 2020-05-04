@@ -21,10 +21,14 @@ class McMMOPlayerAbilityActivateEvent extends McMMOPlayerEvent implements Cancel
 	/** @var int */
 	protected $duration;
 
-	public function __construct(McMMOPlayer $player, Ability $ability, int $duration){
+	/** @var int|null */
+	protected $cooldown;
+
+	public function __construct(McMMOPlayer $player, Ability $ability, int $duration, int $cooldown){
 		parent::__construct($player);
 		$this->ability = $ability;
 		$this->duration = $duration;
+		$this->cooldown = $cooldown;
 	}
 
 	public function getAbility() : Ability{
@@ -44,5 +48,13 @@ class McMMOPlayerAbilityActivateEvent extends McMMOPlayerEvent implements Cancel
 			throw new InvalidArgumentException("Duration cannot be <= 0, got " . $duration);
 		}
 		$this->duration = $duration;
+	}
+
+	public function getCooldown() : ?int{
+		return $this->cooldown;
+	}
+
+	public function setCooldown(?int $cooldown) : void{
+		$this->cooldown = $cooldown;
 	}
 }

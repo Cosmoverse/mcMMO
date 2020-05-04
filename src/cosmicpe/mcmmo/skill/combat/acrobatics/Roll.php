@@ -46,4 +46,8 @@ class Roll extends AcrobaticsSubSkill{
 	public function process(int $level, float $amplifier = self::DEFAULT_ROLL_AMPLIFIER) : bool{
 		return NumberUtils::getRandomBool($this->getChance($level, $amplifier));
 	}
+
+	public function getCooldown() : int{
+		return 0;
+	}
 }
