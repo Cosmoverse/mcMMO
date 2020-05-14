@@ -12,7 +12,7 @@ use cosmicpe\mcmmo\skill\SkillInstance;
 use cosmicpe\mcmmo\skill\SkillManager;
 use cosmicpe\mcmmo\skill\subskill\SubSkillInstance;
 use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
-use pocketmine\utils\UUID;
+use pocketmine\uuid\UUID;
 use poggit\libasynql\DataConnector;
 use poggit\libasynql\libasynql;
 use ReflectionClass;

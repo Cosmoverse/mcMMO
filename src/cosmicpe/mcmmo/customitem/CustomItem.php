@@ -14,9 +14,10 @@ abstract class CustomItem{
 	/**
 	 * @param Item $item
 	 * @param CompoundTag $tag
-	 * @return static
+	 * @return CustomItem
 	 */
 	public static function from(Item $item, CompoundTag $tag){
+		/** @phpstan-ignore-next-line */
 		return new static();
 	}
 

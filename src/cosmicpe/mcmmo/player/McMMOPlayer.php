@@ -14,7 +14,7 @@ use cosmicpe\mcmmo\sound\McMMOLevelUpSound;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
-use pocketmine\utils\UUID;
+use pocketmine\uuid\UUID;
 
 final class McMMOPlayer{
 

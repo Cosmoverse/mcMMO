@@ -10,7 +10,7 @@ use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\player\Player;
-use pocketmine\utils\UUID;
+use pocketmine\uuid\UUID;
 
 final class PlayerManager{
 

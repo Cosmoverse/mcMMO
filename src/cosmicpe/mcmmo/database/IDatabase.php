@@ -6,7 +6,7 @@ namespace cosmicpe\mcmmo\database;
 
 use Closure;
 use cosmicpe\mcmmo\player\McMMOPlayer;
-use pocketmine\utils\UUID;
+use pocketmine\uuid\UUID;
 
 interface IDatabase{
 

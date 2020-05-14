@@ -15,7 +15,10 @@ final class CustomItemFactory{
 	private const TAG_CUSTOM_ITEM = "mcmmo:custom_item";
 	public const TAG_CUSTOM_ITEM_IDENTIFIER = "identifier";
 
-	/** @var CustomItem[]|string[] */
+	/**
+	 * @var CustomItem[]|string[]
+	 * @phpstan-var class-string<CustomItem>[]
+	 */
 	private static $custom_items = [];
 
 	public static function load(McMMO $plugin) : void{

@@ -7,10 +7,10 @@ namespace cosmicpe\mcmmo\command;
 use cosmicpe\mcmmo\McMMO;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwned;
 
-abstract class McMMOCommand extends Command implements PluginIdentifiableCommand{
+abstract class McMMOCommand extends Command implements PluginOwned{
 
 	/** @var McMMO */
 	protected $plugin;
@@ -20,7 +20,7 @@ abstract class McMMOCommand extends Command implements PluginIdentifiableCommand
 		$this->plugin = $plugin;
 	}
 
-	final public function getPlugin() : Plugin{
+	final public function getOwningPlugin() : Plugin{
 		return $this->plugin;
 	}
 

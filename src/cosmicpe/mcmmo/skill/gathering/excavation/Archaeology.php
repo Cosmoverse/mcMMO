@@ -9,6 +9,7 @@ use cosmicpe\mcmmo\skill\SkillInstance;
 use Generator;
 use pocketmine\block\Block;
 use pocketmine\item\ItemFactory;
+use pocketmine\item\LegacyStringToItemParser;
 
 class Archaeology extends ArchaeologySubSkill{
 
@@ -30,7 +31,7 @@ class Archaeology extends ArchaeologySubSkill{
 			"drop" => $drop_config
 		]){
 			$this->loot_table->add(new ArchaeologyLootTableEntry(
-				ItemFactory::getInstance()->fromString($item_string)->setCount($amount),
+				LegacyStringToItemParser::getInstance()->parse($item_string)->setCount($amount),
 				$xp,
 				$drop_config["level"],
 				$drop_config["from"],

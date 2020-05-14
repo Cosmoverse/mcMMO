@@ -8,6 +8,7 @@ use Ds\Set;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
+use pocketmine\item\LegacyStringToItemParser;
 
 final class ArchaeologyLootTableEntry{
 
@@ -36,7 +37,7 @@ final class ArchaeologyLootTableEntry{
 
 		$this->applicable_blocks = new Set();
 		foreach($applicable_blocks as $block_id){
-			$this->applicable_blocks->add(ItemFactory::getInstance()->fromString($block_id)->getBlock()->getId());
+			$this->applicable_blocks->add(LegacyStringToItemParser::getInstance()->parse($block_id)->getBlock()->getId());
 		}
 	}
 

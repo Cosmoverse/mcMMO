@@ -13,6 +13,7 @@ use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\block\Block;
 use pocketmine\block\BlockFactory;
 use pocketmine\item\ItemFactory;
+use pocketmine\item\LegacyStringToItemParser;
 use pocketmine\player\Player;
 
 class Excavation implements GatheringSkill, Listenable{
@@ -25,7 +26,7 @@ class Excavation implements GatheringSkill, Listenable{
 	 */
 	public function __construct(array $blocks_xp_config){
 		foreach($blocks_xp_config as $block_string => $xp){
-			$this->block_xp[ItemFactory::getInstance()->fromString($block_string)->getBlock()->getId()] = $xp;
+			$this->block_xp[LegacyStringToItemParser::getInstance()->parse($block_string)->getBlock()->getId()] = $xp;
 		}
 	}
 
