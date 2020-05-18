@@ -16,7 +16,7 @@ final class McMMOCommandManager{
 
 	public static function init(McMMO $plugin) : void{
 		// Let other plugins register their custom skills during PluginBase::onEnable()
-		$plugin->getScheduler()->scheduleDelayedTask(new ClosureTask(static function(int $currentTick) use($plugin) : void{
+		$plugin->getScheduler()->scheduleDelayedTask(new ClosureTask(static function() use($plugin) : void{
 			self::registerConfiguredCommands($plugin);
 		}), 1);
 	}

@@ -21,7 +21,7 @@ class AbilityExpireTask extends Task{
 		$this->on_expire = $on_expire;
 	}
 
-	public function onRun(int $currentTick) : void{
+	public function onRun() : void{
 		$this->ability_handler->removeCurrent();
 	}
 
