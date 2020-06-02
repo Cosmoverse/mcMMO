@@ -13,6 +13,9 @@ use pocketmine\event\CancellableTrait;
 class McMMOPlayerSkillExperienceChangeEvent extends McMMOPlayerSkillEvent implements Cancellable{
 	use CancellableTrait;
 
+	public const CAUSE_SKILL = 0;
+	public const CAUSE_CUSTOM = 1;
+
 	/** @var int */
 	protected $old_experience;
 
@@ -22,11 +25,15 @@ class McMMOPlayerSkillExperienceChangeEvent extends McMMOPlayerSkillEvent implem
 	/** @var int */
 	protected $old_level;
 
-	public function __construct(McMMOPlayer $player, Skill $skill, int $old_experience, int $new_experience){
+	/** @var int */
+	protected $cause;
+
+	public function __construct(McMMOPlayer $player, Skill $skill, int $old_experience, int $new_experience, int $cause){
 		parent::__construct($player, $skill);
 		$this->old_experience = $old_experience;
 		$this->new_experience = $new_experience;
 		$this->old_level = SkillExperienceManager::get()->getLevelFromExperience($this->old_experience);
+		$this->cause = $cause;
 	}
 
 	public function getOldExperience() : int{
@@ -47,5 +54,9 @@ class McMMOPlayerSkillExperienceChangeEvent extends McMMOPlayerSkillEvent implem
 
 	public function setNewExperience(int $value) : void{
 		$this->new_experience = $value;
+	}
+
+	public function getCause() : int{
+		return $this->cause;
 	}
 }

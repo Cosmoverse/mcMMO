@@ -30,13 +30,13 @@ final class AbilityDuration{
 
 	public function __construct(int $base, int $increase_per, int $increase_by, int $cap){
 		if($base < 0){
-			throw new InvalidArgumentException("base cannot be < 0, got " . $base);
+			throw new InvalidArgumentException("base cannot be < 0, got {$base}");
 		}
 		if($increase_per < 0){
-			throw new InvalidArgumentException("increase_per cannot be < 0, got " . $increase_per);
+			throw new InvalidArgumentException("increase_per cannot be < 0, got {$increase_per}");
 		}
 		if($increase_by < 0){
-			throw new InvalidArgumentException("increase_by cannot be < 0, got " . $increase_by);
+			throw new InvalidArgumentException("increase_by cannot be < 0, got {$increase_by}");
 		}
 
 		$this->base = $base;

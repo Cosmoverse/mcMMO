@@ -125,8 +125,8 @@ class McMMOSkillCommand extends McMMOCommand{
 			}
 
 			$sender->sendMessage(
-				TextFormat::RED . "Proper usage is /" . $commandLabel . TextFormat::EOL .
-				TextFormat::RED . "Proper usage is /" . $commandLabel . " ? [page]"
+				TextFormat::RED . "Proper usage is /{$commandLabel}" . TextFormat::EOL .
+				TextFormat::RED . "Proper usage is /{$commandLabel} ? [page]"
 			);
 			return;
 		}

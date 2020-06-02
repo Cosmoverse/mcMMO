@@ -45,7 +45,7 @@ class McMMOPlayerAbilityActivateEvent extends McMMOPlayerEvent implements Cancel
 
 	public function setDuration(int $duration) : void{
 		if($duration <= 0){
-			throw new InvalidArgumentException("Duration cannot be <= 0, got " . $duration);
+			throw new InvalidArgumentException("Duration cannot be <= 0, got {$duration}");
 		}
 		$this->duration = $duration;
 	}

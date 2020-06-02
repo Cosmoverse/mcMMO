@@ -61,7 +61,7 @@ final class McMMO extends PluginBase{
 				SkillExperienceManager::set(new ExponentialSkillExperience($args["base"], $args["multiplier"], $args["exponent"]));
 				break;
 			default:
-				throw new InvalidArgumentException("Invalid experience type \"" . $config["type"] . " in config.yml");
+				throw new InvalidArgumentException("Invalid experience type \"{$config["type"]}\" in config.yml");
 		}
 	}
 

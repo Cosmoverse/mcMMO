@@ -37,17 +37,17 @@ final class McMMOSubSkillListener{
 								if(!$ev->isCancelled()){
 									$ability->onAdd($player, $mcmmo_player, $item);
 									$sub_skill_instance->setCooldown($ev->getCooldown());
-									$player->sendMessage(TextFormat::GREEN . "* " . $sub_skill->getName() . " ACTIVATED *");
+									$player->sendMessage(TextFormat::GREEN . "* {$sub_skill->getName()} ACTIVATED *");
 									$handler->setCurrent($ability, $ev->getDuration(), static function() use ($player, $sub_skill) : void{
 										if($player->isOnline()){
-											$player->sendMessage(TextFormat::RED . "* " . $sub_skill->getName() . " DEACTIVATED *");
+											$player->sendMessage(TextFormat::RED . "* {$sub_skill->getName()} DEACTIVATED *");
 										}
 									});
 									break;
 								}
 							}
 						}else{
-							$player->sendMessage(TextFormat::RED . "You cannot use " . $sub_skill->getName() . " for another " . $cooldown . "s!");
+							$player->sendMessage(TextFormat::RED . "You cannot use {$sub_skill->getName()} for another {$cooldown}s!");
 						}
 					}
 				}

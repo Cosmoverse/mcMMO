@@ -28,7 +28,7 @@ final class IntegrationManager{
 				$this->setFireworkWrapper(new EmptyFireworkWrapper());
 				break;
 			default:
-				throw new InvalidArgumentException("Unsupported fireworks plugin " . $fireworks_plugin);
+				throw new InvalidArgumentException("Unsupported fireworks plugin {$fireworks_plugin}");
 		}
 	}
 

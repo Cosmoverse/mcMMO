@@ -33,7 +33,7 @@ final class TypedConfigWrapper{
 		$value = $this->config->get($key);
 		$got_type = gettype($value);
 		if($got_type !== $type){
-			throw new InvalidArgumentException("Expected value of " . $key . " to be of type " . $type . ", got " . $got_type);
+			throw new InvalidArgumentException("Expected value of {$key} to be of type {$type}, got {$got_type}");
 		}
 		return $value;
 	}

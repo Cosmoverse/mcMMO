@@ -25,7 +25,7 @@ final class SkillExperienceInstance{
 	 */
 	public function setValue(int $value) : void{
 		if($value < 0){
-			throw new InvalidArgumentException("Experience value must be > 0, got " . $value);
+			throw new InvalidArgumentException("Experience value must be > 0, got {$value}");
 		}
 		$this->value = $value;
 	}
@@ -36,7 +36,7 @@ final class SkillExperienceInstance{
 	 */
 	public function addValue(int $value) : void{
 		if($value < 0){
-			throw new InvalidArgumentException("Experience value must be > 0, got " . $value);
+			throw new InvalidArgumentException("Experience value must be > 0, got {$value}");
 		}
 		$this->setValue($this->value + $value);
 	}
@@ -47,7 +47,7 @@ final class SkillExperienceInstance{
 	 */
 	public function subtractValue(int $value) : void{
 		if($value < 0){
-			throw new InvalidArgumentException("Experience value must be > 0, got " . $value);
+			throw new InvalidArgumentException("Experience value must be > 0, got {$value}");
 		}
 		$this->setValue($this->value - $value);
 	}
@@ -67,11 +67,11 @@ final class SkillExperienceInstance{
 	 */
 	public function setLevel(int $level, float $percentage = 0.0) : void{
 		if($level < 0){
-			throw new InvalidArgumentException("Experience level must be > 0, got " . $level);
+			throw new InvalidArgumentException("Experience level must be > 0, got {$level}");
 		}
 
 		if($percentage < 0.0 || $percentage > 100.0){
-			throw new InvalidArgumentException("Experience level percentage must be >= 0.0, <= 100.0, got " . $percentage);
+			throw new InvalidArgumentException("Experience level percentage must be >= 0.0, <= 100.0, got {$percentage}");
 		}
 
 		$this->setValue(SkillExperienceManager::get()->getExperienceFromLevel($level));

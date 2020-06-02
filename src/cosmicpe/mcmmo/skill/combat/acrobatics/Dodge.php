@@ -46,7 +46,7 @@ class Dodge extends AcrobaticsSubSkill{
 			if(isset($constants[$cause_uppercase = strtoupper($cause)])){
 				$disallowed_causes[$k] = $constants[$cause_uppercase];
 			}elseif(!is_int($cause)){
-				throw new InvalidArgumentException("Invalid damage cause " . $cause . " for Dodge subskill.");
+				throw new InvalidArgumentException("Invalid damage cause \"{$cause}\" for Dodge subskill.");
 			}
 		}
 

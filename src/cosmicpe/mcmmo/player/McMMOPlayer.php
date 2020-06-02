@@ -80,18 +80,18 @@ final class McMMOPlayer{
 		return $this->ability_handler;
 	}
 
-	public function increaseSkillExperience(Skill $skill, int $value) : bool{
-		return $this->setSkillExperience($skill, $this->getSkill($skill)->getExperience()->getValue() + $value);
+	public function increaseSkillExperience(Skill $skill, int $value, ?int $cause = null) : bool{
+		return $this->setSkillExperience($skill, $this->getSkill($skill)->getExperience()->getValue() + $value, $cause);
 	}
 
-	public function decreaseSkillExperience(Skill $skill, int $value) : bool{
-		return $this->setSkillExperience($skill, $this->getSkill($skill)->getExperience()->getValue() - $value);
+	public function decreaseSkillExperience(Skill $skill, int $value, ?int $cause = null) : bool{
+		return $this->setSkillExperience($skill, $this->getSkill($skill)->getExperience()->getValue() - $value, $cause);
 	}
 
-	public function setSkillExperience(Skill $skill, int $value) : bool{
+	public function setSkillExperience(Skill $skill, int $value, ?int $cause = null) : bool{
 		$skill_instance = $this->getSkill($skill);
 		$experience = $skill_instance->getExperience();
-		$ev = new McMMOPlayerSkillExperienceChangeEvent($this, $skill, $skill_instance->getExperience()->getValue(), $value);
+		$ev = new McMMOPlayerSkillExperienceChangeEvent($this, $skill, $skill_instance->getExperience()->getValue(), $value, $cause ?? McMMOPlayerSkillExperienceChangeEvent::CAUSE_CUSTOM);
 		$ev->call();
 		if(!$ev->isCancelled()){
 			$experience->setValue($ev->getNewExperience());
@@ -100,7 +100,8 @@ final class McMMOPlayer{
 			if($new_level > $old_level){
 				$player = $this->getPlayer();
 				if($player !== null){
-					$player->sendMessage(TextFormat::YELLOW . $skill->getName() . " increased by " . ($new_level - $old_level) . ". Total (" . $new_level . ")");
+					$increase = $new_level - $old_level;
+					$player->sendMessage(TextFormat::YELLOW . "{$skill->getName()} increased by {$increase}. Total ({$new_level})");
 					$player->getWorld()->addSound($player->getEyePos(), new McMMOLevelUpSound(), [$player]);
 				}
 			}
@@ -109,15 +110,15 @@ final class McMMOPlayer{
 		return false;
 	}
 
-	public function increaseSkillLevel(Skill $skill, int $value) : bool{
-		return $this->setSkillLevel($skill, $this->getSkill($skill)->getExperience()->getLevel() + $value);
+	public function increaseSkillLevel(Skill $skill, int $value, ?int $cause = null) : bool{
+		return $this->setSkillLevel($skill, $this->getSkill($skill)->getExperience()->getLevel() + $value, $cause);
 	}
 
-	public function decreaseSkillLevel(Skill $skill, int $value) : bool{
-		return $this->setSkillLevel($skill, $this->getSkill($skill)->getExperience()->getLevel() - $value);
+	public function decreaseSkillLevel(Skill $skill, int $value, ?int $cause = null) : bool{
+		return $this->setSkillLevel($skill, $this->getSkill($skill)->getExperience()->getLevel() - $value, $cause);
 	}
 
-	public function setSkillLevel(Skill $skill, int $value) : bool{
-		return $this->setSkillExperience($skill, SkillExperienceManager::get()->getExperienceFromLevel($value));
+	public function setSkillLevel(Skill $skill, int $value, ?int $cause = null) : bool{
+		return $this->setSkillExperience($skill, SkillExperienceManager::get()->getExperienceFromLevel($value), $cause);
 	}
 }
