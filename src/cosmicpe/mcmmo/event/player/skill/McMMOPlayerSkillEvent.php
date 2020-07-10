@@ -7,8 +7,11 @@ namespace cosmicpe\mcmmo\event\player\skill;
 use cosmicpe\mcmmo\event\player\McMMOPlayerEvent;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\Skill;
+use pocketmine\event\Cancellable;
+use pocketmine\event\CancellableTrait;
 
-abstract class McMMOPlayerSkillEvent extends McMMOPlayerEvent{
+class McMMOPlayerSkillEvent extends McMMOPlayerEvent implements Cancellable{
+	use CancellableTrait;
 
 	/** @var Skill */
 	protected $skill;

@@ -9,6 +9,7 @@ use cosmicpe\mcmmo\McMMO;
 use cosmicpe\mcmmo\player\task\AbilityExpireTask;
 use cosmicpe\mcmmo\skill\ability\Ability;
 use cosmicpe\mcmmo\skill\ability\AbilityRemoveHandler;
+use pocketmine\scheduler\TaskHandler;
 use pocketmine\scheduler\TaskScheduler;
 
 final class PlayerAbilityHandler{
@@ -23,8 +24,8 @@ final class PlayerAbilityHandler{
 	/** @var McMMOPlayer */
 	private $mcmmo_player;
 
-	/** @var int|null */
-	private $ability_task_id;
+	/** @var TaskHandler|null */
+	private $ability_task_handler;
 
 	/** @var Ability|null */
 	private $ability;
@@ -39,18 +40,21 @@ final class PlayerAbilityHandler{
 
 	public function removeCurrent() : void{
 		if($this->ability !== null){
-			self::$scheduler->cancelTask($this->ability_task_id);
+			if(!$this->ability_task_handler->isCancelled()){
+				$this->ability_task_handler->cancel();
+			}
+			$this->ability_task_handler = null;
+
 			if($this->ability instanceof AbilityRemoveHandler){
 				$this->ability->onRemove($this->mcmmo_player);
 			}
 			$this->ability = null;
-			$this->ability_task_id = null;
 		}
 	}
 
 	public function setCurrent(Ability $ability, int $duration, ?Closure $on_expire = null) : void{
 		$this->removeCurrent();
 		$this->ability = $ability;
-		$this->ability_task_id = self::$scheduler->scheduleDelayedTask(new AbilityExpireTask($this, $on_expire), $duration * 20)->getTaskId();
+		$this->ability_task_handler = self::$scheduler->scheduleDelayedTask(new AbilityExpireTask($this, $on_expire), $duration * 20);
 	}
 }

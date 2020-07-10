@@ -7,12 +7,9 @@ namespace cosmicpe\mcmmo\event\player\skill\combat;
 use cosmicpe\mcmmo\event\player\skill\McMMOPlayerSkillEvent;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\Skill;
-use pocketmine\event\Cancellable;
-use pocketmine\event\CancellableTrait;
 use pocketmine\event\entity\EntityDamageEvent;
 
-final class McMMOPlayerDodgeEvent extends McMMOPlayerSkillEvent implements Cancellable{
-	use CancellableTrait;
+final class McMMOPlayerDodgeEvent extends McMMOPlayerSkillEvent{
 
 	/** @var EntityDamageEvent */
 	private $cause;
