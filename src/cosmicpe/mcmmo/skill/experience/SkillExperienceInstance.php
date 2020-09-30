@@ -25,7 +25,7 @@ final class SkillExperienceInstance{
 	 */
 	public function setValue(int $value) : void{
 		if($value < 0){
-			throw new InvalidArgumentException("Experience value must be > 0, got {$value}");
+			throw new InvalidArgumentException("Experience value must be >= 0, got {$value}");
 		}
 		$this->value = $value;
 	}
@@ -36,7 +36,7 @@ final class SkillExperienceInstance{
 	 */
 	public function addValue(int $value) : void{
 		if($value < 0){
-			throw new InvalidArgumentException("Experience value must be > 0, got {$value}");
+			throw new InvalidArgumentException("Experience value must be >= 0, got {$value}");
 		}
 		$this->setValue($this->value + $value);
 	}
@@ -47,7 +47,7 @@ final class SkillExperienceInstance{
 	 */
 	public function subtractValue(int $value) : void{
 		if($value < 0){
-			throw new InvalidArgumentException("Experience value must be > 0, got {$value}");
+			throw new InvalidArgumentException("Experience value must be >= 0, got {$value}");
 		}
 		$this->setValue($this->value - $value);
 	}

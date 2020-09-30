@@ -7,11 +7,8 @@ namespace cosmicpe\mcmmo\event\player\skill;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\experience\SkillExperienceManager;
 use cosmicpe\mcmmo\skill\Skill;
-use pocketmine\event\Cancellable;
-use pocketmine\event\CancellableTrait;
 
-class McMMOPlayerSkillExperienceChangeEvent extends McMMOPlayerSkillEvent implements Cancellable{
-	use CancellableTrait;
+class McMMOPlayerSkillExperienceChangeEvent extends McMMOPlayerSkillEvent{
 
 	public const CAUSE_SKILL = 0;
 	public const CAUSE_CUSTOM = 1;

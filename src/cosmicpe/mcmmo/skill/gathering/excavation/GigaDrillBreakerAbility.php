@@ -42,7 +42,7 @@ final class GigaDrillBreakerAbility extends BuffableAbility implements AbilityRe
 
 	public function onRemove(McMMOPlayer $mcmmo_player) : void{
 		$player = $mcmmo_player->getPlayer();
-		if($player !== null){
+		if($player !== null && $player->isOnline()){
 			$inventory = $player->getInventory();
 			$item = $inventory->getItemInHand();
 			$custom_item = CustomItemFactory::from($item);

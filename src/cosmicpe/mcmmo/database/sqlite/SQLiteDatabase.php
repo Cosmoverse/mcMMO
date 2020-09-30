@@ -85,6 +85,7 @@ class SQLiteDatabase implements IDatabase{
 	}
 
 	public function close() : void{
+		$this->database->waitAll();
 		$this->database->close();
 	}
 }

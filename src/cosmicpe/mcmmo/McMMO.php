@@ -53,6 +53,12 @@ final class McMMO extends PluginBase{
 		McMMOCommandManager::init($this);
 	}
 
+	protected function onDisable() : void{
+		$this->player_manager->destroy();
+		$this->database->close();
+		self::$instance = null;
+	}
+
 	private function parseExperienceFormula() : void{
 		$config = $this->getConfig()->get("experience");
 		switch($type = strtolower($config["type"])){
@@ -71,10 +77,5 @@ final class McMMO extends PluginBase{
 
 	public function getIntegrationManager() : IntegrationManager{
 		return $this->integration_manager ?? $this->integration_manager = new IntegrationManager($this);
-	}
-
-	protected function onDisable() : void{
-		$this->database->close();
-		self::$instance = null;
 	}
 }

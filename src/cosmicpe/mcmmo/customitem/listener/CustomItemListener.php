@@ -24,7 +24,7 @@ class CustomItemListener implements Listener{
 			$player = $event->getPlayer();
 			if($custom_item->onInteract($player, $item, $event->getBlock())){
 				$player->getInventory()->setItemInHand($item);
-				$event->setCancelled();
+				$event->cancel();
 			}
 		}
 	}
@@ -43,7 +43,7 @@ class CustomItemListener implements Listener{
 					$cancel = $custom_item->onMoveItem($transaction->getSource(), $item);
 					$action->getInventory()->setItem($action->getSlot(), $item);
 					if($cancel){
-						$event->setCancelled();
+						$event->cancel();
 						break;
 					}
 				}
@@ -55,7 +55,7 @@ class CustomItemListener implements Listener{
 		$item = $event->getItem();
 		$custom_item = CustomItemFactory::from($item);
 		if($custom_item instanceof Movable && $custom_item->onMoveItem($event->getPlayer(), $item)){
-			$event->setCancelled();
+			$event->cancel();
 		}
 	}
 }

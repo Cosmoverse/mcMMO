@@ -40,6 +40,12 @@ final class PlayerManager{
 		PlayerAbilityHandler::init($plugin);
 	}
 
+	public function destroy() : void{
+		foreach($this->players as $player){
+			$this->unload($player);
+		}
+	}
+
 	public function load(UUID $uuid) : void{
 		$this->database->load($uuid, function(McMMOPlayer $player) : void{
 			$this->players[$player->getUniqueId()->toBinary()] = $player;
