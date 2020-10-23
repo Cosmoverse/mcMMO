@@ -11,14 +11,14 @@ use cosmicpe\mcmmo\skill\combat\CombatSkillIds;
 use cosmicpe\mcmmo\skill\Listenable;
 use cosmicpe\mcmmo\skill\subskill\SubSkillIds;
 use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
-use pocketmine\item\enchantment\Enchantment;
+use pocketmine\item\enchantment\VanillaEnchantments;
 use pocketmine\player\Player;
 
 class Acrobatics implements CombatSkill, Listenable{
 
 	public function getFallXp(Player $player, float $damage, bool $roll_processed) : int{
 		$feather_falling_amp = 1;
-		$feather_falling = Enchantment::FEATHER_FALLING();
+		$feather_falling = VanillaEnchantments::FEATHER_FALLING();
 		foreach($player->getArmorInventory()->getContents() as $item){
 			if($item->hasEnchantment($feather_falling)){
 				$feather_falling_amp = 2;

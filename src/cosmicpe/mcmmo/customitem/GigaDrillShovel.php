@@ -10,8 +10,8 @@ use cosmicpe\mcmmo\McMMO;
 use cosmicpe\mcmmo\skill\gathering\excavation\GigaDrillBreakerAbility;
 use InvalidArgumentException;
 use pocketmine\block\Block;
-use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\enchantment\EnchantmentInstance;
+use pocketmine\item\enchantment\VanillaEnchantments;
 use pocketmine\item\Item;
 use pocketmine\item\Shovel;
 use pocketmine\nbt\tag\CompoundTag;
@@ -55,7 +55,7 @@ class GigaDrillShovel extends CustomItem implements Interactable, Movable{
 	public function __construct(Shovel $shovel, int $buff, ?int $original = null){
 		$this->shovel = $shovel;
 		$this->buff = $buff;
-		$this->original = $original ?? $shovel->getEnchantmentLevel(Enchantment::EFFICIENCY());
+		$this->original = $original ?? $shovel->getEnchantmentLevel(VanillaEnchantments::EFFICIENCY());
 	}
 
 	public function getItem() : Item{
@@ -63,7 +63,7 @@ class GigaDrillShovel extends CustomItem implements Interactable, Movable{
 		if(!in_array(self::TAG_MARKER_LORE, $lore, true)){
 			$lore[] = self::TAG_MARKER_LORE;
 		}
-		return $this->shovel->addEnchantment(new EnchantmentInstance(Enchantment::EFFICIENCY(), $this->original + $this->buff))->setLore($lore);
+		return $this->shovel->addEnchantment(new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), $this->original + $this->buff))->setLore($lore);
 	}
 
 	public function nbtSerialize() : CompoundTag{
@@ -83,9 +83,9 @@ class GigaDrillShovel extends CustomItem implements Interactable, Movable{
 			}
 		}
 		if($this->original === 0){
-			$item->removeEnchantment(Enchantment::EFFICIENCY());
+			$item->removeEnchantment(VanillaEnchantments::EFFICIENCY());
 		}else{
-			$item->addEnchantment(new EnchantmentInstance(Enchantment::EFFICIENCY(), $this->original));
+			$item->addEnchantment(new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), $this->original));
 		}
 	}
 
