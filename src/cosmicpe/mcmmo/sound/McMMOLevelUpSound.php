@@ -18,7 +18,7 @@ class McMMOLevelUpSound implements Sound{
 		$this->volume = $volume;
 	}
 
-	public function encode(?Vector3 $pos){
+	public function encode(?Vector3 $pos) : array{
 		if($pos === null){
 			throw new InvalidArgumentException("No position provided for sound.");
 		}
@@ -30,6 +30,6 @@ class McMMOLevelUpSound implements Sound{
 		$packet->z = $pos->z;
 		$packet->volume = $this->volume;
 		$packet->pitch = 0.5;
-		return $packet;
+		return [$packet];
 	}
 }
