@@ -12,7 +12,6 @@ use cosmicpe\mcmmo\skill\subskill\SubSkillIds;
 use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\block\Block;
 use pocketmine\block\BlockFactory;
-use pocketmine\item\ItemFactory;
 use pocketmine\item\LegacyStringToItemParser;
 use pocketmine\player\Player;
 
@@ -55,7 +54,7 @@ class Excavation implements GatheringSkill, Listenable{
 
 		$compatible_materials = [];
 		foreach(array_keys($this->block_xp) as $identifier){
-			$compatible_materials[] = BlockFactory::getInstance()->get($identifier)->getName();
+			$compatible_materials[] = BlockFactory::getInstance()->get($identifier, 0)->getName();
 		}
 		$compatible_materials = array_unique($compatible_materials);
 		sort($compatible_materials);
