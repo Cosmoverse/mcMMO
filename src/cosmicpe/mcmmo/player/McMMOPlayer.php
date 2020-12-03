@@ -43,7 +43,7 @@ final class McMMOPlayer{
 	}
 
 	public function onDisconnect() : void{
-		$this->ability_handler->removeCurrent();
+		$this->ability_handler->destroy();
 	}
 
 	public function getUniqueId() : UUID{

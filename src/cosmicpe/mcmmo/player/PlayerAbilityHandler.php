@@ -21,7 +21,7 @@ final class PlayerAbilityHandler{
 		self::$scheduler = $plugin->getScheduler();
 	}
 
-	/** @var McMMOPlayer */
+	/** @var McMMOPlayer|null */
 	private $mcmmo_player;
 
 	/** @var TaskHandler|null */
@@ -32,6 +32,11 @@ final class PlayerAbilityHandler{
 
 	public function __construct(McMMOPlayer $mcmmo_player){
 		$this->mcmmo_player = $mcmmo_player;
+	}
+
+	public function destroy() : void{
+		$this->removeCurrent();
+		$this->mcmmo_player = null;
 	}
 
 	public function getCurrent() : ?Ability{
