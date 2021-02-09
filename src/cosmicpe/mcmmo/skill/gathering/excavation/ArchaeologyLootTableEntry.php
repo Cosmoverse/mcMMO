@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\skill\gathering\excavation;
 
-use Ds\Set;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
-use pocketmine\item\ItemFactory;
 use pocketmine\item\LegacyStringToItemParser;
 
 final class ArchaeologyLootTableEntry{
@@ -21,8 +19,8 @@ final class ArchaeologyLootTableEntry{
 	/** @var int */
 	private $level_requirement;
 
-	/** @var Set<int> */
-	private $applicable_blocks;
+	/** @var int[] */
+	private $applicable_blocks = [];
 
 	/**
 	 * @param Item $item
@@ -35,9 +33,9 @@ final class ArchaeologyLootTableEntry{
 		$this->experience = $experience;
 		$this->level_requirement = $level_requirement;
 
-		$this->applicable_blocks = new Set();
 		foreach($applicable_blocks as $block_id){
-			$this->applicable_blocks->add(LegacyStringToItemParser::getInstance()->parse($block_id)->getBlock()->getId());
+			$block_id = LegacyStringToItemParser::getInstance()->parse($block_id)->getBlock()->getId();
+			$this->applicable_blocks[$block_id] = $block_id;
 		}
 	}
 
@@ -54,6 +52,6 @@ final class ArchaeologyLootTableEntry{
 	}
 
 	public function isBlockApplicable(Block $block) : bool{
-		return $this->applicable_blocks->contains($block->getId());
+		return isset($this->applicable_blocks[$block->getId()]);
 	}
 }

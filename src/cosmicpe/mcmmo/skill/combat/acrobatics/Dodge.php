@@ -6,7 +6,6 @@ namespace cosmicpe\mcmmo\skill\combat\acrobatics;
 
 use cosmicpe\mcmmo\skill\combat\CombatSubSkillIds;
 use cosmicpe\mcmmo\utils\NumberUtils;
-use Ds\Set;
 use InvalidArgumentException;
 use pocketmine\event\entity\EntityDamageEvent;
 use ReflectionClass;
@@ -25,15 +24,15 @@ class Dodge extends AcrobaticsSubSkill{
 	/** @var float */
 	private $damage_amplifier;
 
-	/** @var Set<int> */
-	private $disallowed_causes;
+	/** @var int[] */
+	private $disallowed_causes = [];
 
 	/**
 	 * @param int $min_level
 	 * @param int $max_level
 	 * @param float $max_chance
 	 * @param float $damage_amplifier
-	 * @param int[] $disallowed_causes
+	 * @param string[]|int[] $disallowed_causes
 	 */
 	public function __construct(int $min_level, int $max_level, float $max_chance, float $damage_amplifier, array $disallowed_causes){
 		$this->max_level = $max_level;
@@ -44,13 +43,13 @@ class Dodge extends AcrobaticsSubSkill{
 		$constants = (new ReflectionClass(EntityDamageEvent::class))->getConstants();
 		foreach($disallowed_causes as $k => $cause){
 			if(isset($constants[$cause_uppercase = strtoupper($cause)])){
-				$disallowed_causes[$k] = $constants[$cause_uppercase];
-			}elseif(!is_int($cause)){
+				$this->disallowed_causes[$constants[$cause_uppercase]] = $constants[$cause_uppercase];
+			}elseif(is_int($cause)){
+				$this->disallowed_causes[$cause] = $cause;
+			}else{
 				throw new InvalidArgumentException("Invalid damage cause \"{$cause}\" for Dodge subskill.");
 			}
 		}
-
-		$this->disallowed_causes = new Set($disallowed_causes);
 	}
 
 	public function getIdentifier() : string{
@@ -66,7 +65,7 @@ class Dodge extends AcrobaticsSubSkill{
 	}
 
 	public function isCauseAllowed(int $cause) : bool{
-		return !$this->disallowed_causes->contains($cause);
+		return !isset($this->disallowed_causes[$cause]);
 	}
 
 	public function getChance(int $level, float $amplifier = 1.0) : float{

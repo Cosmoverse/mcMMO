@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace cosmicpe\mcmmo\utils;
 
-use Ds\Deque;
 use Generator;
 use pocketmine\utils\Random;
 
@@ -61,10 +60,9 @@ abstract class WeightedRandom{
 		$probabilities = $this->probabilities;
 
 		// Create two stacks to act as worklists as we populate the tables.
-		$small = new Deque();
-		$small->allocate($probabilities_c);
-		$large = new Deque();
-		$large->allocate($probabilities_c);
+
+		$small = [];
+		$large = [];
 
 		// Populate the stacks with the input probabilities.
 		for($i = 0; $i < $probabilities_c; ++$i){
@@ -73,9 +71,9 @@ abstract class WeightedRandom{
 			 * it to the small list; otherwise we add it to the large list.
 			 */
 			if($probabilities[$i] >= $average){
-				$large->push($i);
+				$large[] = $i;
 			}else{
-				$small->push($i);
+				$small[] = $i;
 			}
 		}
 
@@ -86,10 +84,10 @@ abstract class WeightedRandom{
 		 * Consequently, this inner loop (which tries to pair small and large
 		 * elements) will have to check that both lists aren't empty.
 		 */
-		while(!$small->isEmpty() && !$large->isEmpty()){
+		while(count($small) > 0 && count($large) > 0){
 			/* Get the index of the small and the large probabilities. */
-			$less = $small->pop();
-			$more = $large->pop();
+			$less = array_pop($small);
+			$more = array_pop($large);
 
 			/**
 			 * These probabilities have not yet been scaled up to be such that
@@ -109,9 +107,9 @@ abstract class WeightedRandom{
 			 * small list; otherwise add it to the large list.
 			 */
 			if($probabilities[$more] >= 1.0 / $probabilities_c){
-				$large->push($more);
+				$large[] = $more;
 			}else{
-				$small->push($more);
+				$small[] = $more;
 			}
 		}
 
@@ -121,11 +119,11 @@ abstract class WeightedRandom{
 		 * appropriately.  Due to numerical issues, we can't be sure which
 		 * stack will hold the entries, so we empty both.
 		 */
-		while(!$small->isEmpty()){
-			$this->probabilities[$small->pop()] = 1.0;
+		while(count($small) > 0){
+			$this->probabilities[array_pop($small)] = 1.0;
 		}
-		while(!$large->isEmpty()){
-			$this->probabilities[$large->pop()] = 1.0;
+		while(count($large) > 0){
+			$this->probabilities[array_pop($large)] = 1.0;
 		}
 	}
 
