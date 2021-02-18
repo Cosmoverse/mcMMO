@@ -81,7 +81,7 @@ final class McMMOSkillListener{
 	public static function registerEvent(int $priority, Closure $callback) : void{
 		$event_class = null;
 		try{
-			$event_class = (new ReflectionFunction($callback))->getParameters()[0]->getClass()->getName();
+			$event_class = (new ReflectionFunction($callback))->getParameters()[0]->getType()->getName();
 		}catch(ReflectionException $e){
 			throw new RuntimeException($e->getMessage());
 		}
