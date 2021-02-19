@@ -9,6 +9,7 @@ use Closure;
 use cosmicpe\mcmmo\McMMO;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\player\PlayerManager;
+use InvalidArgumentException;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Cancellable;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -19,6 +20,7 @@ use pocketmine\event\player\PlayerItemUseEvent;
 use pocketmine\player\Player;
 use ReflectionException;
 use ReflectionFunction;
+use ReflectionNamedType;
 use RuntimeException;
 
 final class McMMOSkillListener{
@@ -78,13 +80,21 @@ final class McMMOSkillListener{
 		}
 	}
 
+	/**
+	 * @param Closure $callback
+	 * @param int $priority
+	 *
+	 * @phpstan-template TEvent of Event
+	 * @phpstan-param Closure(TEvent, Player, McMMOPlayer, McMMOExperienceToller) : void $callback
+	 */
 	public static function registerEvent(int $priority, Closure $callback) : void{
 		$event_class = null;
-		try{
-			$event_class = (new ReflectionFunction($callback))->getParameters()[0]->getType()->getName();
-		}catch(ReflectionException $e){
-			throw new RuntimeException($e->getMessage());
+
+		$type = (new ReflectionFunction($callback))->getParameters()[0]->getType();
+		if(!($type instanceof ReflectionNamedType)){
+			throw new InvalidArgumentException("Invalid parameter type in supplied callback");
 		}
+		$event_class = $type->getName();
 
 		if(!isset(self::$callbacks[$priority][$event_class])){
 			self::$callbacks[$priority][$event_class] = $events = new ArrayObject();
