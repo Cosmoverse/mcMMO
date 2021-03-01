@@ -62,7 +62,7 @@ final class McMMOPlayer{
 	}
 
 	public function getSkill(Skill $skill) : SkillInstance{
-		return $this->skills[$identifier = $skill->getIdentifier()] ?? $this->skills[$identifier] = new SkillInstance($skill);
+		return $this->skills[$skill->getIdentifier()] ??= new SkillInstance($skill);
 	}
 
 	/**
@@ -73,7 +73,7 @@ final class McMMOPlayer{
 	}
 
 	public function getSubSkill(SubSkill $skill) : SubSkillInstance{
-		return $this->sub_skills[$identifier = $skill->getIdentifier()] ?? $this->sub_skills[$identifier] = new SubSkillInstance($skill);
+		return $this->sub_skills[$skill->getIdentifier()] ??= new SubSkillInstance($skill);
 	}
 
 	public function getAbilityHandler() : PlayerAbilityHandler{

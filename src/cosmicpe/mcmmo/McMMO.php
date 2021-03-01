@@ -76,6 +76,6 @@ final class McMMO extends PluginBase{
 	}
 
 	public function getIntegrationManager() : IntegrationManager{
-		return $this->integration_manager ?? $this->integration_manager = new IntegrationManager($this);
+		return $this->integration_manager ??= new IntegrationManager($this);
 	}
 }

@@ -67,7 +67,7 @@ final class McMMOSkillListener{
 	}
 
 	private static function getExperienceToller(Event $event) : McMMOExperienceToller{
-		return self::$experience_tollers[$id = spl_object_id($event)] ?? self::$experience_tollers[$id] = new McMMOExperienceToller();
+		return self::$experience_tollers[spl_object_id($event)] ??= new McMMOExperienceToller();
 	}
 
 	private static function removeExperienceToller(Event $event, ?McMMOPlayer $player) : void{
