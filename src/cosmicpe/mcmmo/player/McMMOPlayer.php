@@ -14,11 +14,11 @@ use cosmicpe\mcmmo\sound\McMMOLevelUpSound;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
-use pocketmine\uuid\UUID;
+use Ramsey\Uuid\UuidInterface;
 
 final class McMMOPlayer{
 
-	/** @var UUID */
+	/** @var UuidInterface */
 	private $uuid;
 
 	/** @var SkillInstance[] */
@@ -31,11 +31,11 @@ final class McMMOPlayer{
 	private $ability_handler;
 
 	/**
-	 * @param UUID $uuid
+	 * @param UuidInterface $uuid
 	 * @param SkillInstance[] $skills
 	 * @param SubSkillInstance[] $sub_skills
 	 */
-	public function __construct(UUID $uuid, array $skills = [], array $sub_skills = []){
+	public function __construct(UuidInterface $uuid, array $skills = [], array $sub_skills = []){
 		$this->uuid = $uuid;
 		$this->skills = $skills;
 		$this->sub_skills = $sub_skills;
@@ -46,7 +46,7 @@ final class McMMOPlayer{
 		$this->ability_handler->destroy();
 	}
 
-	public function getUniqueId() : UUID{
+	public function getUniqueId() : UuidInterface{
 		return $this->uuid;
 	}
 

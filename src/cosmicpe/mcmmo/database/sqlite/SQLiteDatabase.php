@@ -12,9 +12,9 @@ use cosmicpe\mcmmo\skill\SkillInstance;
 use cosmicpe\mcmmo\skill\SkillManager;
 use cosmicpe\mcmmo\skill\subskill\SubSkillInstance;
 use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
-use pocketmine\uuid\UUID;
 use poggit\libasynql\DataConnector;
 use poggit\libasynql\libasynql;
+use Ramsey\Uuid\UuidInterface;
 use ReflectionClass;
 
 class SQLiteDatabase implements IDatabase{
@@ -35,7 +35,7 @@ class SQLiteDatabase implements IDatabase{
 		}
 	}
 
-	public function load(UUID $uuid, Closure $callback) : void{
+	public function load(UuidInterface $uuid, Closure $callback) : void{
 		$db = $this->database;
 		$db->executeSelect(SQLiteStmt::LOAD_SKILLS, ["uuid" => $uuid->toString()], static function(array $rows) use ($callback, $uuid, $db) : void{
 			$skills = [];

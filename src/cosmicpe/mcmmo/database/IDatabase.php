@@ -6,15 +6,15 @@ namespace cosmicpe\mcmmo\database;
 
 use Closure;
 use cosmicpe\mcmmo\player\McMMOPlayer;
-use pocketmine\uuid\UUID;
+use Ramsey\Uuid\UuidInterface;
 
 interface IDatabase{
 
 	/**
-	 * @param UUID $uuid
+	 * @param UuidInterface $uuid
 	 * @param Closure $callback
 	 */
-	public function load(UUID $uuid, Closure $callback) : void;
+	public function load(UuidInterface $uuid, Closure $callback) : void;
 
 	public function save(McMMOPlayer $player) : void;
 

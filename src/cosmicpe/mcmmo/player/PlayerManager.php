@@ -10,7 +10,7 @@ use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\player\Player;
-use pocketmine\uuid\UUID;
+use Ramsey\Uuid\UuidInterface;
 
 final class PlayerManager{
 
@@ -46,9 +46,9 @@ final class PlayerManager{
 		}
 	}
 
-	public function load(UUID $uuid) : void{
+	public function load(UuidInterface $uuid) : void{
 		$this->database->load($uuid, function(McMMOPlayer $player) : void{
-			$this->players[$player->getUniqueId()->toBinary()] = $player;
+			$this->players[$player->getUniqueId()->getBytes()] = $player;
 		});
 	}
 
@@ -56,13 +56,13 @@ final class PlayerManager{
 		return $this->getByUUID($player->getUniqueId());
 	}
 
-	public function getByUUID(UUID $uuid) : ?McMMOPlayer{
-		return $this->players[$uuid->toBinary()] ?? null;
+	public function getByUUID(UuidInterface $uuid) : ?McMMOPlayer{
+		return $this->players[$uuid->getBytes()] ?? null;
 	}
 
 	public function unload(McMMOPlayer $player) : void{
 		$player->onDisconnect();
 		$this->database->save($player);
-		unset($this->players[$player->getUniqueId()->toBinary()]);
+		unset($this->players[$player->getUniqueId()->getBytes()]);
 	}
 }
