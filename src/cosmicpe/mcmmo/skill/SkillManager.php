@@ -12,6 +12,7 @@ use cosmicpe\mcmmo\skill\gathering\excavation\Excavation;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
 use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\plugin\Plugin;
+use pocketmine\Server;
 
 final class SkillManager{
 
@@ -66,7 +67,7 @@ final class SkillManager{
 		self::$skills[$skill->getIdentifier()] = $skill;
 		if($skill instanceof Listenable){
 			self::onInit(static function() use($skill, $plugin) : void{
-				$plugin_manager = $plugin->getServer()->getPluginManager();
+				$plugin_manager = Server::getInstance()->getPluginManager();
 				foreach($skill->getListeners() as $listener){
 					$plugin_manager->registerEvents($listener, $plugin);
 				}
