@@ -15,10 +15,9 @@ use Ramsey\Uuid\UuidInterface;
 final class PlayerManager{
 
 	/** @var McMMOPlayer[] */
-	private $players = [];
+	private array $players = [];
 
-	/** @var IDatabase */
-	private $database;
+	private IDatabase $database;
 
 	public function init(McMMO $plugin, IDatabase $database) : void{
 		$plugin_manager = $plugin->getServer()->getPluginManager();

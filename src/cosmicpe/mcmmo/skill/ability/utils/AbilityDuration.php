@@ -16,17 +16,10 @@ final class AbilityDuration{
 		return new AbilityDuration($config["base"], $config["increase"]["per"], $config["increase"]["by"], $config["max"] ?? -1);
 	}
 
-	/** @var int */
-	private $base;
-
-	/** @var int */
-	private $increase_per;
-
-	/** @var int */
-	private $increase_by;
-
-	/** @var int */
-	private $cap;
+	private int $base;
+	private int $increase_per;
+	private int $increase_by;
+	private int $cap;
 
 	public function __construct(int $base, int $increase_per, int $increase_by, int $cap){
 		if($base < 0){

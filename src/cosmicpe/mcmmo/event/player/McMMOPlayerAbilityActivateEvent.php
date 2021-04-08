@@ -15,14 +15,9 @@ use pocketmine\event\CancellableTrait;
 class McMMOPlayerAbilityActivateEvent extends McMMOPlayerEvent implements Cancellable{
 	use CancellableTrait;
 
-	/** @var Ability */
-	protected $ability;
-
-	/** @var int */
-	protected $duration;
-
-	/** @var int|null */
-	protected $cooldown;
+	protected Ability $ability;
+	protected int $duration;
+	protected int $cooldown;
 
 	public function __construct(McMMOPlayer $player, Ability $ability, int $duration, int $cooldown){
 		parent::__construct($player);
@@ -50,11 +45,11 @@ class McMMOPlayerAbilityActivateEvent extends McMMOPlayerEvent implements Cancel
 		$this->duration = $duration;
 	}
 
-	public function getCooldown() : ?int{
+	public function getCooldown() : int{
 		return $this->cooldown;
 	}
 
-	public function setCooldown(?int $cooldown) : void{
+	public function setCooldown(int $cooldown) : void{
 		$this->cooldown = $cooldown;
 	}
 }

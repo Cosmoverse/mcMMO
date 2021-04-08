@@ -16,7 +16,7 @@ use pocketmine\utils\TextFormat;
 final class McMMOSubSkillListener{
 
 	/** @var Ability[][] */
-	private static $abilities = [];
+	private static array $abilities = [];
 
 	public static function init() : void{
 		McMMOSkillListener::registerEvent(EventPriority::NORMAL, static function(PlayerItemUseEvent $event, Player $player, McMMOPlayer $mcmmo_player) : void{

@@ -13,17 +13,10 @@ class McMMOPlayerSkillExperienceChangeEvent extends McMMOPlayerSkillEvent{
 	public const CAUSE_SKILL = 0;
 	public const CAUSE_CUSTOM = 1;
 
-	/** @var int */
-	protected $old_experience;
-
-	/** @var int */
-	protected $new_experience;
-
-	/** @var int */
-	protected $old_level;
-
-	/** @var int */
-	protected $cause;
+	protected int $old_experience;
+	protected int $new_experience;
+	protected int $old_level;
+	protected int $cause;
 
 	public function __construct(McMMOPlayer $player, Skill $skill, int $old_experience, int $new_experience, int $cause){
 		parent::__construct($player, $skill);

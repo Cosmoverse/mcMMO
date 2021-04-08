@@ -8,11 +8,8 @@ use Closure;
 
 final class McMMOExperienceTollerEntry{
 
-	/** @var int */
-	public $experience;
-
-	/** @var Closure|null */
-	public $success;
+	public int $experience;
+	public ?Closure $success;
 
 	public function __construct(int $experience, ?Closure $success = null){
 		$this->experience = $experience;

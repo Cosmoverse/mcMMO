@@ -18,21 +18,15 @@ use pocketmine\plugin\PluginBase;
 
 final class McMMO extends PluginBase{
 
-	/** @var McMMO|null */
-	private static $instance;
+	private static ?McMMO $instance;
 
 	public static function getInstance() : McMMO{
 		return self::$instance;
 	}
 
-	/** @var IDatabase */
-	private $database;
-
-	/** @var PlayerManager */
-	private $player_manager;
-
-	/** @var IntegrationManager|null */
-	private $integration_manager;
+	private IDatabase $database;
+	private PlayerManager $player_manager;
+	private ?IntegrationManager $integration_manager = null;
 
 	protected function onLoad() : void{
 		self::$instance = $this;

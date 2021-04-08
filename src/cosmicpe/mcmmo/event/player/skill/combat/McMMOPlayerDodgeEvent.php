@@ -11,8 +11,7 @@ use pocketmine\event\entity\EntityDamageEvent;
 
 final class McMMOPlayerDodgeEvent extends McMMOPlayerSkillEvent{
 
-	/** @var EntityDamageEvent */
-	private $cause;
+	private EntityDamageEvent $cause;
 
 	public function __construct(McMMOPlayer $player, Skill $skill, EntityDamageEvent $cause){
 		parent::__construct($player, $skill);

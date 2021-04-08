@@ -11,14 +11,9 @@ use cosmicpe\mcmmo\skill\listener\McMMOSubSkillListener;
 
 class GigaDrillBreaker extends ArchaeologySubSkill implements BuffableAbilitySubSkill{
 
-	/** @var AbilityDuration */
-	private $duration;
-
-	/** @var int */
-	private $enchantment_buff;
-
-	/** @var int */
-	private $cooldown;
+	private AbilityDuration $duration;
+	private int $enchantment_buff;
+	private int $cooldown;
 
 	/**
 	 * @param array<string, mixed> $config

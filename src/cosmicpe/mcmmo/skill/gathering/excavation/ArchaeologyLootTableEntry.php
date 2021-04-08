@@ -10,17 +10,12 @@ use pocketmine\item\LegacyStringToItemParser;
 
 final class ArchaeologyLootTableEntry{
 
-	/** @var Item */
-	private $item;
-
-	/** @var int */
-	private $experience;
-
-	/** @var int */
-	private $level_requirement;
+	private Item $item;
+	private int $experience;
+	private int $level_requirement;
 
 	/** @var int[] */
-	private $applicable_blocks = [];
+	private array $applicable_blocks = [];
 
 	/**
 	 * @param Item $item

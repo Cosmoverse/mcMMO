@@ -13,11 +13,8 @@ use pocketmine\item\LegacyStringToItemParser;
 
 class Archaeology extends ArchaeologySubSkill{
 
-	/** @var int */
-	private $max_loot_drops;
-
-	/** @var ArchaeologyLootTable */
-	protected $loot_table;
+	private int $max_loot_drops;
+	protected ArchaeologyLootTable $loot_table;
 
 	/**
 	 * @param array<string, mixed> $archaeology_config

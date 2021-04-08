@@ -6,8 +6,7 @@ namespace cosmicpe\mcmmo\skill\experience;
 
 final class SkillExperienceManager{
 
-	/** @var SkillExperience */
-	private static $experience;
+	private static SkillExperience $experience;
 
 	public static function set(SkillExperience $experience) : void{
 		self::$experience = $experience;

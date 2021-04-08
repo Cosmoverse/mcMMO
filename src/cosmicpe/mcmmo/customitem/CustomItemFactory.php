@@ -19,7 +19,7 @@ final class CustomItemFactory{
 	 * @var CustomItem[]|string[]
 	 * @phpstan-var class-string<CustomItem>[]
 	 */
-	private static $custom_items = [];
+	private static array $custom_items = [];
 
 	public static function load(McMMO $plugin) : void{
 		self::registerDefaults();

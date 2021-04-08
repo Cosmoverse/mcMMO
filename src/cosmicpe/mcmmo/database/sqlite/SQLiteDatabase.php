@@ -19,8 +19,7 @@ use ReflectionClass;
 
 class SQLiteDatabase implements IDatabase{
 
-	/** @var DataConnector */
-	private $database;
+	private DataConnector $database;
 
 	public function __construct(McMMO $plugin){
 		$this->database = libasynql::create($plugin, $plugin->getConfig()->get("database"), [

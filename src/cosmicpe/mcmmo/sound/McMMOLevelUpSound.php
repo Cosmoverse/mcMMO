@@ -11,8 +11,7 @@ use pocketmine\world\sound\Sound;
 
 class McMMOLevelUpSound implements Sound{
 
-	/** @var int */
-	protected $volume;
+	protected int $volume;
 
 	public function __construct(int $volume = 320){
 		$this->volume = $volume;

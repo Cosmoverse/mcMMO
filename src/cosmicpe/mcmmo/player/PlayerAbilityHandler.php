@@ -14,21 +14,15 @@ use pocketmine\scheduler\TaskScheduler;
 
 final class PlayerAbilityHandler{
 
-	/** @var TaskScheduler */
-	private static $scheduler;
+	private static TaskScheduler $scheduler;
 
 	public static function init(McMMO $plugin) : void{
 		self::$scheduler = $plugin->getScheduler();
 	}
 
-	/** @var McMMOPlayer|null */
-	private $mcmmo_player;
-
-	/** @var TaskHandler|null */
-	private $ability_task_handler;
-
-	/** @var Ability|null */
-	private $ability;
+	private ?McMMOPlayer $mcmmo_player;
+	private ?TaskHandler $ability_task_handler = null;
+	private ?Ability $ability = null;
 
 	public function __construct(McMMOPlayer $mcmmo_player){
 		$this->mcmmo_player = $mcmmo_player;

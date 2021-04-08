@@ -18,7 +18,7 @@ use pocketmine\player\Player;
 class Excavation implements GatheringSkill, Listenable{
 
 	/** @var array<int, int> */
-	protected $block_xp = [];
+	protected array $block_xp = [];
 
 	/**
 	 * @param array<string, int> $blocks_xp_config

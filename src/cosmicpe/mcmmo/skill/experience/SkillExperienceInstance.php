@@ -8,8 +8,7 @@ use InvalidArgumentException;
 
 final class SkillExperienceInstance{
 
-	/** @var int */
-	private $value;
+	private int $value;
 
 	public function __construct(int $value){
 		$this->value = $value;

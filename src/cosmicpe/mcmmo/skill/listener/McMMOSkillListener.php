@@ -25,17 +25,16 @@ use RuntimeException;
 
 final class McMMOSkillListener{
 
-	/** @var McMMO */
-	private static $plugin;
+	private static McMMO $plugin;
 
 	/** @var ArrayObject<string, Closure>[][] */
-	private static $callbacks = [];
+	private static array $callbacks = [];
 
 	/** @var Closure[] */
-	private static $parser = [];
+	private static array $parser = [];
 
 	/** @var McMMOExperienceToller[] */
-	private static $experience_tollers = [];
+	private static array $experience_tollers = [];
 
 	public static function init(McMMO $plugin) : void{
 		self::$plugin = $plugin;

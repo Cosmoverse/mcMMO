@@ -13,8 +13,7 @@ use pocketmine\event\CancellableTrait;
 class McMMOPlayerSkillEvent extends McMMOPlayerEvent implements Cancellable{
 	use CancellableTrait;
 
-	/** @var Skill */
-	protected $skill;
+	protected Skill $skill;
 
 	public function __construct(McMMOPlayer $player, Skill $skill){
 		parent::__construct($player);

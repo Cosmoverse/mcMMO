@@ -43,14 +43,9 @@ class GigaDrillShovel extends CustomItem implements Interactable, Movable{
 		return new GigaDrillShovel($item, $tag->getShort(self::TAG_BUFF), $tag->getShort(self::TAG_ORIGINAL));
 	}
 
-	/** @var Shovel $shovel */
-	private $shovel;
-
-	/** @var int */
-	private $buff;
-
-	/** @var int */
-	private $original;
+	private Shovel $shovel;
+	private int $buff;
+	private int $original;
 
 	public function __construct(Shovel $shovel, int $buff, ?int $original = null){
 		$this->shovel = $shovel;

@@ -9,11 +9,8 @@ use pocketmine\player\Player;
 
 final class McMMOListenerParserResult{
 
-	/** @var Player */
-	public $player;
-
-	/** @var McMMOPlayer */
-	public $mcmmo_player;
+	public Player $player;
+	public McMMOPlayer $mcmmo_player;
 
 	public function __construct(Player $player, McMMOPlayer $mcmmo_player){
 		$this->player = $player;

@@ -11,8 +11,7 @@ use pocketmine\utils\Config;
 
 final class IntegrationManager{
 
-	/** @var FireworkWrapper */
-	private $firework;
+	private ?FireworkWrapper $firework = null;
 
 	public function __construct(McMMO $plugin){
 		$plugin->saveResource("integration.yml");

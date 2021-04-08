@@ -12,14 +12,9 @@ class Roll extends AcrobaticsSubSkill{
 	public const GRACEFUL_ROLL_AMPLIFIER = 2.0;
 	public const DEFAULT_ROLL_AMPLIFIER = 1.0;
 
-	/** @var int */
-	protected $max_level;
-
-	/** @var float */
-	protected $max_chance;
-
-	/** @var float */
-	private $damage_reduction;
+	protected int $max_level;
+	protected float $max_chance;
+	private float $damage_reduction;
 
 	public function __construct(int $max_level, float $max_chance, float $damage_reduction){
 		$this->max_level = $max_level;

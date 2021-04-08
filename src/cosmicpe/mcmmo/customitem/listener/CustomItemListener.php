@@ -11,7 +11,7 @@ use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\inventory\transaction\action\SlotChangeAction;
 
-class CustomItemListener implements Listener{
+final class CustomItemListener implements Listener{
 
 	/**
 	 * @param PlayerInteractEvent $event

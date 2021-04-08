@@ -18,17 +18,14 @@ use Ramsey\Uuid\UuidInterface;
 
 final class McMMOPlayer{
 
-	/** @var UuidInterface */
-	private $uuid;
+	private UuidInterface $uuid;
+	private PlayerAbilityHandler $ability_handler;
 
 	/** @var SkillInstance[] */
-	private $skills;
+	private array $skills;
 
 	/** @var SubSkillInstance[] */
-	private $sub_skills;
-
-	/** @var PlayerAbilityHandler */
-	private $ability_handler;
+	private array $sub_skills;
 
 	/**
 	 * @param UuidInterface $uuid

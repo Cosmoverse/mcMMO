@@ -15,20 +15,17 @@ use pocketmine\utils\Utils;
 
 class McMMOSkillCommand extends McMMOCommand{
 
-	/** @var string */
-	private $command_config;
+	private string $command_config;
+	private Skill $skill;
 
 	/** @var string[] */
-	private $guide_config;
-
-	/** @var Skill */
-	private $skill;
+	private array $guide_config;
 
 	/** @var Closure[] */
-	private $command_wildcards = [];
+	private array $command_wildcards = [];
 
 	/** @var Closure[] */
-	private $guide_wildcards = [];
+	private array $guide_wildcards = [];
 
 	/**
 	 * @param McMMO $plugin

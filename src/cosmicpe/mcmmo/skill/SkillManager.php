@@ -16,17 +16,14 @@ use pocketmine\Server;
 
 final class SkillManager{
 
-	/** @var PlayerManager */
-	private static $player_manager;
+	private static bool $init = false;
+	private static PlayerManager $player_manager;
 
 	/** @var Skill[] */
-	private static $skills = [];
-
-	/** @var bool */
-	private static $init = false;
+	private static array $skills = [];
 
 	/** @var Closure[] */
-	private static $on_init = [];
+	private static array $on_init = [];
 
 	public static function load(McMMO $plugin) : void{
 		self::registerDefaults($plugin);

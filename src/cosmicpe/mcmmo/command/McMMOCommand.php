@@ -12,8 +12,7 @@ use pocketmine\plugin\PluginOwned;
 
 abstract class McMMOCommand extends Command implements PluginOwned{
 
-	/** @var McMMO */
-	protected $plugin;
+	protected McMMO $plugin;
 
 	public function __construct(McMMO $plugin, string $name, string $description = "", ?string $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, $usageMessage, $aliases);

@@ -8,14 +8,9 @@ use cosmicpe\mcmmo\skill\experience\SkillExperienceInstance;
 
 final class SkillInstance{
 
-	/** @var Skill */
-	private $skill;
-
-	/** @var int|null */
-	private $cooldown;
-
-	/** @var SkillExperienceInstance */
-	private $experience;
+	private Skill $skill;
+	private ?int $cooldown;
+	private SkillExperienceInstance $experience;
 
 	public function __construct(Skill $skill, ?int $cooldown = null, int $experience = 0){
 		$this->skill = $skill;

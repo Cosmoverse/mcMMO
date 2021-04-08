@@ -13,7 +13,7 @@ use cosmicpe\mcmmo\skill\SkillManager;
 final class McMMOExperienceToller{
 
 	/** @var McMMOExperienceTollerEntry[][] */
-	private $experiences = [];
+	private array $experiences = [];
 
 	public function add(Skill $skill, int $experience, ?Closure $success = null) : void{
 		if($experience > 0){

@@ -12,20 +12,13 @@ use ReflectionClass;
 
 class Dodge extends AcrobaticsSubSkill{
 
-	/** @var int */
-	protected $max_level;
-
-	/** @var float */
-	protected $max_chance;
-
-	/** @var int */
-	protected $min_level;
-
-	/** @var float */
-	private $damage_amplifier;
+	protected int $max_level;
+	protected float $max_chance;
+	protected int $min_level;
+	private float $damage_amplifier;
 
 	/** @var int[] */
-	private $disallowed_causes = [];
+	private array $disallowed_causes = [];
 
 	/**
 	 * @param int $min_level

@@ -6,14 +6,9 @@ namespace cosmicpe\mcmmo\skill\experience;
 
 class ExponentialSkillExperience implements SkillExperience{
 
-	/** @var float */
-	private $constant;
-
-	/** @var float */
-	private $multiplier;
-
-	/** @var float */
-	private $exponent;
+	private float $constant;
+	private float $multiplier;
+	private float $exponent;
 
 	public function __construct(float $constant, float $multiplier, float $exponent){
 		$this->constant = $constant;
