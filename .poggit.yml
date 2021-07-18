@@ -7,4 +7,8 @@ projects:
     path: ""
     lint:
       phpstan: false
+    libs:
+      - src: poggit/libasynql/libasynql
+        version: ^3.4.0
+        branch: "4.0"
 ...
