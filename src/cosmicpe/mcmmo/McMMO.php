@@ -55,7 +55,8 @@ final class McMMO extends PluginBase{
 
 	private function parseExperienceFormula() : void{
 		$config = $this->getConfig()->get("experience");
-		switch($type = strtolower($config["type"])){
+		$type = strtolower($config["type"]);
+		switch($type){
 			case "exponential":
 				$args = $config[$type];
 				SkillExperienceManager::set(new ExponentialSkillExperience($args["base"], $args["multiplier"], $args["exponent"]));
