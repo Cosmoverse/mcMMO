@@ -21,11 +21,7 @@ abstract class WeightedRandom{
 	/** @var mixed[] */
 	protected array $indexes = [];
 
-	/**
-	 * @param mixed $value
-	 * @param float $weight
-	 */
-	final public function add($value, float $weight) : void{
+	final public function add(mixed $value, float $weight) : void{
 		$this->probabilities[] = $weight;
 		$this->indexes[] = $value;
 	}

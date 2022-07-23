@@ -23,12 +23,7 @@ final class TypedConfigWrapper{
 		return $this->getType($key, "string");
 	}
 
-	/**
-	 * @param string $key
-	 * @param string $type
-	 * @return mixed
-	 */
-	private function getType(string $key, string $type){
+	private function getType(string $key, string $type) : mixed{
 		$value = $this->config->get($key);
 		$got_type = gettype($value);
 		if($got_type !== $type){
