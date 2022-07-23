@@ -18,24 +18,18 @@ use Ramsey\Uuid\UuidInterface;
 
 final class McMMOPlayer{
 
-	private UuidInterface $uuid;
 	private PlayerAbilityHandler $ability_handler;
-
-	/** @var array<string, SkillInstance> */
-	private array $skills;
-
-	/** @var array<string, SubSkillInstance> */
-	private array $sub_skills;
 
 	/**
 	 * @param UuidInterface $uuid
 	 * @param array<string, SkillInstance> $skills
 	 * @param array<string, SubSkillInstance> $sub_skills
 	 */
-	public function __construct(UuidInterface $uuid, array $skills = [], array $sub_skills = []){
-		$this->uuid = $uuid;
-		$this->skills = $skills;
-		$this->sub_skills = $sub_skills;
+	public function __construct(
+		private UuidInterface $uuid,
+		private array $skills = [],
+		private array $sub_skills = []
+	){
 		$this->ability_handler = new PlayerAbilityHandler($this);
 	}
 

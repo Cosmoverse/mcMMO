@@ -9,11 +9,9 @@ use pocketmine\utils\Config;
 
 final class TypedConfigWrapper{
 
-	private Config $config;
-
-	public function __construct(Config $config){
-		$this->config = $config;
-	}
+	public function __construct(
+		private Config $config
+	){}
 
 	public function getInt(string $key) : int{
 		return $this->getType($key, "int");

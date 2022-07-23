@@ -9,11 +9,9 @@ use cosmicpe\mcmmo\player\McMMOPlayer;
 
 abstract class McMMOPlayerEvent extends McMMOEvent{
 
-	protected McMMOPlayer $player;
-
-	public function __construct(McMMOPlayer $player){
-		$this->player = $player;
-	}
+	public function __construct(
+		protected McMMOPlayer $player
+	){}
 
 	public function getMcMMOPlayer() : McMMOPlayer{
 		return $this->player;

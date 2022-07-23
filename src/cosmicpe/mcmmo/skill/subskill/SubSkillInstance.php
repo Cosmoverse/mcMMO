@@ -6,13 +6,10 @@ namespace cosmicpe\mcmmo\skill\subskill;
 
 final class SubSkillInstance{
 
-	private SubSkill $sub_skill;
-	private ?int $cooldown;
-
-	public function __construct(SubSkill $sub_skill, ?int $cooldown = null){
-		$this->sub_skill = $sub_skill;
-		$this->cooldown = $cooldown;
-	}
+	public function __construct(
+		private SubSkill $sub_skill,
+		private ?int $cooldown = null
+	){}
 
 	public function getSubSkill() : SubSkill{
 		return $this->sub_skill;

@@ -10,19 +10,14 @@ use pocketmine\scheduler\Task;
 
 class AbilityExpireTask extends Task{
 
-	private PlayerAbilityHandler $ability_handler;
-
-	/** @var (Closure() : void)|null */
-	private ?Closure $on_expire;
-
 	/**
 	 * @param PlayerAbilityHandler $ability_handler
 	 * @param (Closure() : void)|null $on_expire
 	 */
-	public function __construct(PlayerAbilityHandler $ability_handler, ?Closure $on_expire = null){
-		$this->ability_handler = $ability_handler;
-		$this->on_expire = $on_expire;
-	}
+	public function __construct(
+		private PlayerAbilityHandler $ability_handler,
+		private ?Closure $on_expire = null
+	){}
 
 	public function onRun() : void{
 		$this->ability_handler->removeCurrent();
