@@ -19,7 +19,7 @@ final class SkillManager{
 	private static bool $init = false;
 	private static PlayerManager $player_manager;
 
-	/** @var Skill[] */
+	/** @var array<string, Skill> */
 	private static array $skills = [];
 
 	/** @var array<Closure() : void> */
@@ -83,7 +83,7 @@ final class SkillManager{
 	/**
 	 * Returns all skills indexed by their identifier.
 	 *
-	 * @return Skill[]
+	 * @return array<string, Skill>
 	 */
 	public static function getAll() : array{
 		return self::$skills;

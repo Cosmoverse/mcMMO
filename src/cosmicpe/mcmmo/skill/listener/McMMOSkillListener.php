@@ -27,13 +27,13 @@ final class McMMOSkillListener{
 
 	private static McMMO $plugin;
 
-	/** @var ArrayObject<string, Closure(Event, Player, McMMOPlayer, McMMOExperienceToller) : void>[][] */
+	/** @var array<int, array<string, ArrayObject<string, Closure(Event, Player, McMMOPlayer, McMMOExperienceToller) : void>>> */
 	private static array $callbacks = [];
 
-	/** @var array<Closure(Event, PlayerManager) : ?McMMOListenerParserResult> */
+	/** @var array<string, Closure(Event, PlayerManager) : ?McMMOListenerParserResult> */
 	private static array $parser = [];
 
-	/** @var McMMOExperienceToller[] */
+	/** @var array<int, McMMOExperienceToller> */
 	private static array $experience_tollers = [];
 
 	public static function init(McMMO $plugin) : void{

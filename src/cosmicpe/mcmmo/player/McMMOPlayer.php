@@ -21,16 +21,16 @@ final class McMMOPlayer{
 	private UuidInterface $uuid;
 	private PlayerAbilityHandler $ability_handler;
 
-	/** @var SkillInstance[] */
+	/** @var array<string, SkillInstance> */
 	private array $skills;
 
-	/** @var SubSkillInstance[] */
+	/** @var array<string, SubSkillInstance> */
 	private array $sub_skills;
 
 	/**
 	 * @param UuidInterface $uuid
-	 * @param SkillInstance[] $skills
-	 * @param SubSkillInstance[] $sub_skills
+	 * @param array<string, SkillInstance> $skills
+	 * @param array<string, SubSkillInstance> $sub_skills
 	 */
 	public function __construct(UuidInterface $uuid, array $skills = [], array $sub_skills = []){
 		$this->uuid = $uuid;
@@ -52,7 +52,7 @@ final class McMMOPlayer{
 	}
 
 	/**
-	 * @return SkillInstance[]
+	 * @return array<string, SkillInstance>
 	 */
 	public function getSkills() : array{
 		return $this->skills;
@@ -63,7 +63,7 @@ final class McMMOPlayer{
 	}
 
 	/**
-	 * @return SubSkillInstance[]
+	 * @return array<string, SubSkillInstance>
 	 */
 	public function getSubSkills() : array{
 		return $this->sub_skills;

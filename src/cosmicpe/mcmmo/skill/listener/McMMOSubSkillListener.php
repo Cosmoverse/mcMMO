@@ -15,7 +15,7 @@ use pocketmine\utils\TextFormat;
 
 final class McMMOSubSkillListener{
 
-	/** @var Ability[][] */
+	/** @var array<int, array<string, Ability>> */
 	private static array $abilities = [];
 
 	public static function init() : void{

@@ -14,7 +14,7 @@ final class ArchaeologyLootTableEntry{
 	private int $experience;
 	private int $level_requirement;
 
-	/** @var int[] */
+	/** @var array<int, int> */
 	private array $applicable_blocks = [];
 
 	/**

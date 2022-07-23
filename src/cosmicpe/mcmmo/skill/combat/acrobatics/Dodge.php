@@ -17,7 +17,7 @@ class Dodge extends AcrobaticsSubSkill{
 	protected int $min_level;
 	private float $damage_amplifier;
 
-	/** @var int[] */
+	/** @var array<int|string, int|string> */
 	private array $disallowed_causes = [];
 
 	/**
@@ -25,7 +25,7 @@ class Dodge extends AcrobaticsSubSkill{
 	 * @param int $max_level
 	 * @param float $max_chance
 	 * @param float $damage_amplifier
-	 * @param string[]|int[] $disallowed_causes
+	 * @param array<int|string, int|string> $disallowed_causes
 	 */
 	public function __construct(int $min_level, int $max_level, float $max_chance, float $damage_amplifier, array $disallowed_causes){
 		$this->max_level = $max_level;

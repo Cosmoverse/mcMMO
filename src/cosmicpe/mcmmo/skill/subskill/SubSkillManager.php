@@ -12,7 +12,7 @@ use cosmicpe\mcmmo\skill\gathering\excavation\GigaDrillBreaker;
 
 final class SubSkillManager{
 
-	/** @var SubSkill[] */
+	/** @var array<string, SubSkill> */
 	private static array $sub_skills = [];
 
 	public static function init(McMMO $plugin) : void{

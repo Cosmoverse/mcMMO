@@ -14,7 +14,7 @@ use Ramsey\Uuid\UuidInterface;
 
 final class PlayerManager{
 
-	/** @var McMMOPlayer[] */
+	/** @var array<string, McMMOPlayer> */
 	private array $players = [];
 
 	private IDatabase $database;

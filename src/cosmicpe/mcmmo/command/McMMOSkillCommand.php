@@ -24,10 +24,10 @@ class McMMOSkillCommand extends McMMOCommand{
 	/** @var string[] */
 	private array $guide_config;
 
-	/** @var CommandWildcardCallback[] */
+	/** @var array<string, CommandWildcardCallback> */
 	private array $command_wildcards = [];
 
-	/** @var CommandWildcardCallback[] */
+	/** @var array<string, CommandWildcardCallback> */
 	private array $guide_wildcards = [];
 
 	/**
@@ -82,7 +82,7 @@ class McMMOSkillCommand extends McMMOCommand{
 	 * @param McMMOPlayer $mcmmo_player
 	 * @param string $commandLabel
 	 * @param string[] $args
-	 * @return string[]
+	 * @return array<string, string>
 	 */
 	private function getCommandWildcards(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : array{
 		$translation = [];
@@ -97,7 +97,7 @@ class McMMOSkillCommand extends McMMOCommand{
 	 * @param McMMOPlayer $mcmmo_player
 	 * @param string $commandLabel
 	 * @param string[] $args
-	 * @return string[]
+	 * @return array<string, string>
 	 */
 	private function getGuideWildcards(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : array{
 		$translation = [];
