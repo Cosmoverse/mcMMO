@@ -13,6 +13,9 @@ use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\Utils;
 
+/**
+ * @phpstan-type CommandWildcardCallback Closure(Player, McMMOPlayer, string, string[]) : string
+ */
 class McMMOSkillCommand extends McMMOCommand{
 
 	private string $command_config;
@@ -21,10 +24,10 @@ class McMMOSkillCommand extends McMMOCommand{
 	/** @var string[] */
 	private array $guide_config;
 
-	/** @var Closure[] */
+	/** @var CommandWildcardCallback[] */
 	private array $command_wildcards = [];
 
-	/** @var Closure[] */
+	/** @var CommandWildcardCallback[] */
 	private array $guide_wildcards = [];
 
 	/**
@@ -56,11 +59,19 @@ class McMMOSkillCommand extends McMMOCommand{
 		return $this->guide_config;
 	}
 
+	/**
+	 * @param string $wildcard
+	 * @param CommandWildcardCallback $resolution
+	 */
 	public function registerCommandWildcard(string $wildcard, Closure $resolution) : void{
 		Utils::validateCallableSignature(static function(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : string{ return ""; }, $resolution);
 		$this->command_wildcards[$wildcard] = $resolution;
 	}
 
+	/**
+	 * @param string $wildcard
+	 * @param CommandWildcardCallback $resolution
+	 */
 	public function registerGuideWildcard(string $wildcard, Closure $resolution) : void{
 		Utils::validateCallableSignature(static function(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : string{ return ""; }, $resolution);
 		$this->guide_wildcards[$wildcard] = $resolution;

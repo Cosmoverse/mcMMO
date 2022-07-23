@@ -27,10 +27,10 @@ final class McMMOSkillListener{
 
 	private static McMMO $plugin;
 
-	/** @var ArrayObject<string, Closure>[][] */
+	/** @var ArrayObject<string, Closure(Event, Player, McMMOPlayer, McMMOExperienceToller) : void>[][] */
 	private static array $callbacks = [];
 
-	/** @var Closure[] */
+	/** @var array<Closure(Event, PlayerManager) : ?McMMOListenerParserResult> */
 	private static array $parser = [];
 
 	/** @var McMMOExperienceToller[] */
@@ -123,6 +123,11 @@ final class McMMOSkillListener{
 		self::$callbacks[$priority][$event_class]->append($callback);
 	}
 
+	/**
+	 * @template TEvent of Event
+	 * @param string $event
+	 * @param Closure(TEvent, PlayerManager) : ?McMMOListenerParserResult $parser
+	 */
 	public static function registerParser(string $event, Closure $parser) : void{
 		self::$parser[$event] = $parser;
 	}

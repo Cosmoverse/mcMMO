@@ -12,7 +12,7 @@ interface IDatabase{
 
 	/**
 	 * @param UuidInterface $uuid
-	 * @param Closure $callback
+	 * @param Closure(McMMOPlayer) : void $callback
 	 */
 	public function load(UuidInterface $uuid, Closure $callback) : void;
 

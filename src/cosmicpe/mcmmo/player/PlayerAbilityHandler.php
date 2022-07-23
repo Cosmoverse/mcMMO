@@ -51,6 +51,11 @@ final class PlayerAbilityHandler{
 		}
 	}
 
+	/**
+	 * @param Ability $ability
+	 * @param int $duration
+	 * @param (Closure() : void)|null $on_expire
+	 */
 	public function setCurrent(Ability $ability, int $duration, ?Closure $on_expire = null) : void{
 		$this->removeCurrent();
 		$this->ability = $ability;

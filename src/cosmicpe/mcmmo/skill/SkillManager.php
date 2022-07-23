@@ -22,7 +22,7 @@ final class SkillManager{
 	/** @var Skill[] */
 	private static array $skills = [];
 
-	/** @var Closure[] */
+	/** @var array<Closure() : void> */
 	private static array $on_init = [];
 
 	public static function load(McMMO $plugin) : void{
