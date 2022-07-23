@@ -40,6 +40,9 @@ final class SkillManager{
 		self::$on_init = [];
 	}
 
+	/**
+	 * @param Closure() : void $callback
+	 */
 	private static function onInit(Closure $callback) : void{
 		if(self::$init){
 			$callback();

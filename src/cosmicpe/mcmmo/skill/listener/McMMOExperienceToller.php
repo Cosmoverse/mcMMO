@@ -15,6 +15,11 @@ final class McMMOExperienceToller{
 	/** @var array<string, array<McMMOExperienceTollerEntry>> */
 	private array $experiences = [];
 
+	/**
+	 * @param Skill $skill
+	 * @param int $experience
+	 * @param (Closure() : void)|null $success
+	 */
 	public function add(Skill $skill, int $experience, ?Closure $success = null) : void{
 		if($experience > 0){
 			$this->experiences[$skill->getIdentifier()][] = new McMMOExperienceTollerEntry($experience, $success);
