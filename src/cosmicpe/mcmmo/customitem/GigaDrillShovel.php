@@ -38,7 +38,7 @@ class GigaDrillShovel extends CustomItem implements Interactable, Movable{
 
 	public static function from(Item $item, CompoundTag $tag) : GigaDrillShovel{
 		if(!($item instanceof Shovel)){
-			throw new InvalidArgumentException("Expected shovel, got " . get_class($item));
+			throw new InvalidArgumentException("Expected shovel, got " . $item::class);
 		}
 		return new GigaDrillShovel($item, $tag->getShort(self::TAG_BUFF), $tag->getShort(self::TAG_ORIGINAL));
 	}

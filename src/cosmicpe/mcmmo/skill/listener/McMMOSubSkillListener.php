@@ -56,6 +56,6 @@ final class McMMOSubSkillListener{
 	}
 
 	public static function registerAbility(Ability $ability) : void{
-		self::$abilities[$ability->getToolType()][get_class($ability)] = $ability;
+		self::$abilities[$ability->getToolType()][$ability::class] = $ability;
 	}
 }
