@@ -80,11 +80,9 @@ final class McMMOSkillListener{
 	}
 
 	/**
-	 * @param Closure $callback
+	 * @template TEvent of Event
+	 * @param Closure(TEvent, Player, McMMOPlayer, McMMOExperienceToller) : void $callback
 	 * @param int $priority
-	 *
-	 * @phpstan-template TEvent of Event
-	 * @phpstan-param Closure(TEvent, Player, McMMOPlayer, McMMOExperienceToller) : void $callback
 	 */
 	public static function registerEvent(int $priority, Closure $callback) : void{
 		$event_class = null;
