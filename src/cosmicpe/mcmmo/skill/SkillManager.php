@@ -17,7 +17,6 @@ use pocketmine\Server;
 final class SkillManager{
 
 	private static bool $init = false;
-	private static PlayerManager $player_manager;
 
 	/** @var array<string, Skill> */
 	private static array $skills = [];
@@ -30,7 +29,6 @@ final class SkillManager{
 	}
 
 	public static function init(McMMO $plugin) : void{
-		self::$player_manager = $plugin->getPlayerManager();
 		McMMOSkillListener::init($plugin);
 
 		self::$init = true;
