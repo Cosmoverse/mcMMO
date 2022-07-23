@@ -20,13 +20,8 @@ class McMMOLevelUpSound implements Sound{
 			throw new InvalidArgumentException("No position provided for sound.");
 		}
 
-		$packet = new PlaySoundPacket();
-		$packet->soundName = "random.levelup";
-		$packet->x = $pos->x;
-		$packet->y = $pos->y;
-		$packet->z = $pos->z;
-		$packet->volume = $this->volume;
-		$packet->pitch = 0.5;
-		return [$packet];
+		return [
+			PlaySoundPacket::create("random.levelup", $pos->x, $pos->y, $pos->z, $this->volume, 0.5)
+		];
 	}
 }
