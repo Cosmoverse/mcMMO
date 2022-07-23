@@ -64,7 +64,7 @@ class McMMOSkillCommand extends McMMOCommand{
 	 * @param CommandWildcardCallback $resolution
 	 */
 	public function registerCommandWildcard(string $wildcard, Closure $resolution) : void{
-		Utils::validateCallableSignature(static function(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : string{ return ""; }, $resolution);
+		Utils::validateCallableSignature(static fn(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : string => "", $resolution);
 		$this->command_wildcards[$wildcard] = $resolution;
 	}
 
@@ -73,7 +73,7 @@ class McMMOSkillCommand extends McMMOCommand{
 	 * @param CommandWildcardCallback $resolution
 	 */
 	public function registerGuideWildcard(string $wildcard, Closure $resolution) : void{
-		Utils::validateCallableSignature(static function(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : string{ return ""; }, $resolution);
+		Utils::validateCallableSignature(static fn(Player $sender, McMMOPlayer $mcmmo_player, string $commandLabel, array $args) : string => "", $resolution);
 		$this->guide_wildcards[$wildcard] = $resolution;
 	}
 
