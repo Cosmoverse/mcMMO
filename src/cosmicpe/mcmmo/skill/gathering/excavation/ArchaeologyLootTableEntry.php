@@ -7,6 +7,7 @@ namespace cosmicpe\mcmmo\skill\gathering\excavation;
 use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\item\LegacyStringToItemParser;
+use pocketmine\item\StringToItemParser;
 
 final class ArchaeologyLootTableEntry{
 
@@ -29,7 +30,9 @@ final class ArchaeologyLootTableEntry{
 		$this->level_requirement = $level_requirement;
 
 		foreach($applicable_blocks as $block_id){
-			$block_id = LegacyStringToItemParser::getInstance()->parse($block_id)->getBlock()->getId();
+			$item = StringToItemParser::getInstance()->parse($block_id) ?? LegacyStringToItemParser::getInstance()->parse($block_id);
+			$block = $item->getBlock();
+			$block_id = $block->getTypeId();
 			$this->applicable_blocks[$block_id] = $block_id;
 		}
 	}
@@ -47,6 +50,6 @@ final class ArchaeologyLootTableEntry{
 	}
 
 	public function isBlockApplicable(Block $block) : bool{
-		return isset($this->applicable_blocks[$block->getId()]);
+		return isset($this->applicable_blocks[$block->getTypeId()]);
 	}
 }

@@ -9,6 +9,6 @@ projects:
       phpstan: false
     libs:
       - src: poggit/libasynql/libasynql
-        version: ^3.4.0
-        branch: "4.0"
+        version: ^4.1.1
+        branch: pm5
 ...

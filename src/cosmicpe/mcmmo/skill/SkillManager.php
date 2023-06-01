@@ -6,7 +6,6 @@ namespace cosmicpe\mcmmo\skill;
 
 use Closure;
 use cosmicpe\mcmmo\McMMO;
-use cosmicpe\mcmmo\player\PlayerManager;
 use cosmicpe\mcmmo\skill\combat\acrobatics\Acrobatics;
 use cosmicpe\mcmmo\skill\gathering\excavation\Excavation;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;

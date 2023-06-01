@@ -9,6 +9,7 @@ use cosmicpe\mcmmo\McMMO;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\Skill;
 use pocketmine\command\CommandSender;
+use pocketmine\permission\DefaultPermissions;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\Utils;
@@ -39,6 +40,7 @@ class McMMOSkillCommand extends McMMOCommand{
 	 */
 	public function __construct(McMMO $plugin, Skill $skill, string $name, string $command_config, array $guide_config){
 		parent::__construct($plugin, $name);
+		$this->setPermission(DefaultPermissions::ROOT_USER);
 		$this->command_config = $command_config;
 		$this->guide_config = $guide_config;
 		$this->skill = $skill;

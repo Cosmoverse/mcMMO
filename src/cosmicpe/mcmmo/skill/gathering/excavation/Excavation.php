@@ -11,8 +11,8 @@ use cosmicpe\mcmmo\skill\Listenable;
 use cosmicpe\mcmmo\skill\subskill\SubSkillIds;
 use cosmicpe\mcmmo\skill\subskill\SubSkillManager;
 use pocketmine\block\Block;
-use pocketmine\block\BlockFactory;
 use pocketmine\item\LegacyStringToItemParser;
+use pocketmine\item\StringToItemParser;
 use pocketmine\player\Player;
 
 class Excavation implements GatheringSkill, Listenable{
@@ -20,12 +20,18 @@ class Excavation implements GatheringSkill, Listenable{
 	/** @var array<int, int> */
 	protected array $block_xp = [];
 
+	/** @var array<int, Block> */
+	protected array $block_mapping = [];
+
 	/**
 	 * @param array<string, int> $blocks_xp_config
 	 */
 	public function __construct(array $blocks_xp_config){
-		foreach($blocks_xp_config as $block_string => $xp){
-			$this->block_xp[LegacyStringToItemParser::getInstance()->parse($block_string)->getBlock()->getId()] = $xp;
+		foreach($blocks_xp_config as $block_string => $xp) {
+			$item = StringToItemParser::getInstance()->parse($block_string) ?? LegacyStringToItemParser::getInstance()->parse($block_string);
+			$block = $item->getBlock();
+			$this->block_xp[$block->getTypeId()] = $xp;
+			$this->block_mapping[$block->getTypeId()] = $block;
 		}
 	}
 
@@ -42,7 +48,7 @@ class Excavation implements GatheringSkill, Listenable{
 	}
 
 	public function getBlockExperience(Block $block) : int{
-		return $this->block_xp[$block->getId()] ?? 0;
+		return $this->block_xp[$block->getTypeId()] ?? 0;
 	}
 
 	public function onSkillCommandRegister(McMMOSkillCommand $command) : void{
@@ -54,7 +60,7 @@ class Excavation implements GatheringSkill, Listenable{
 
 		$compatible_materials = [];
 		foreach(array_keys($this->block_xp) as $identifier){
-			$compatible_materials[] = BlockFactory::getInstance()->get($identifier, 0)->getName();
+			$compatible_materials[] = $this->block_mapping[$identifier]->getName();
 		}
 		$compatible_materials = array_unique($compatible_materials);
 		sort($compatible_materials);

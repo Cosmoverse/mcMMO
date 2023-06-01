@@ -13,6 +13,7 @@ use cosmicpe\mcmmo\player\PlayerManager;
 use cosmicpe\mcmmo\skill\experience\ExponentialSkillExperience;
 use cosmicpe\mcmmo\skill\experience\SkillExperienceManager;
 use cosmicpe\mcmmo\skill\SkillManager;
+use cosmicpe\mcmmo\vanilla\ExtraVanillaData;
 use InvalidArgumentException;
 use pocketmine\plugin\PluginBase;
 
@@ -30,6 +31,7 @@ final class McMMO extends PluginBase{
 
 	protected function onLoad() : void{
 		self::$instance = $this;
+		ExtraVanillaData::registerOnAllThreads($this->getServer()->getAsyncPool());
 		$this->player_manager = new PlayerManager();
 		CustomItemFactory::load($this);
 		SkillManager::load($this);
