@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace cosmicpe\mcmmo\skill\combat\acrobatics;
 
 use cosmicpe\mcmmo\event\player\skill\combat\McMMOPlayerDodgeEvent;
+use cosmicpe\mcmmo\event\player\skill\combat\McMMOPlayerRollEvent;
 use cosmicpe\mcmmo\player\McMMOPlayer;
 use cosmicpe\mcmmo\skill\listener\McMMOExperienceToller;
 use cosmicpe\mcmmo\skill\listener\McMMOSkillListener;
@@ -51,10 +52,15 @@ class AcrobaticsListener implements Listener{
 				$damage = $event->getFinalDamage();
 				$graceful = $player->isSneaking();
 				if($roll_processed = $roll->process($skill->getExperience()->getLevel(), $graceful ? Roll::GRACEFUL_ROLL_AMPLIFIER : Roll::DEFAULT_ROLL_AMPLIFIER)){
-					$event->setBaseDamage(max(0, $event->getBaseDamage() - $roll->getDamageReduction($graceful)));
-					$cb = static function() use($player, $graceful) : void{
-						$player->sendMessage($graceful ? TextFormat::GREEN . "**Graceful Landing**" : TextFormat::ITALIC . "**Rolled**");
-					};
+					($ev = new McMMOPlayerRollEvent($mcmmo_player, $acrobatics, $event))->call();
+					if(!$ev->isCancelled()){
+						$event->setBaseDamage(max(0, $event->getBaseDamage() - $roll->getDamageReduction($graceful)));
+						$cb = static function() use ($player, $graceful) : void{
+							$player->sendMessage($graceful ? TextFormat::GREEN . "**Graceful Landing**" : TextFormat::ITALIC . "**Rolled**");
+						};
+					}else{
+						$cb = null;
+					}
 				}else{
 					$cb = null;
 				}
